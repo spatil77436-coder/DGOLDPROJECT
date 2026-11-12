@@ -1,0 +1,1 @@
+import {asyncHandler} from "../utils/asyncHandler.js";import {ok} from "../utils/ApiResponse.js";import {prisma} from "../config/database.js";export const list=asyncHandler(async(req,res)=>{const limit=Math.min(100,Number(req.query.limit)||50);ok(res,await prisma.auditLog.findMany({include:{admin:{select:{email:true}}},orderBy:{createdAt:"desc"},take:limit}))});

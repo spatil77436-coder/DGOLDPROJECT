@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  preparing
+  out_for_delivery
+  delivered
+  cancelled
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sessions     AdminSession[]
+  auditLogs    AuditLog[]
+}
+
+model AdminSession {
+  id               String   @id @default(cuid())
+  adminId          String
+  refreshTokenHash String   @unique
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  createdAt        DateTime @default(now())
+  admin            Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  @@index([adminId, expiresAt])
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  name        String
+  tagline     String        @default("")
+  description String        @default("")
+  highlights  String[]      @default([])
+  image       String?
+  available   Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  packs       ProductPack[]
+  stockLogs   StockLog[]
+  orders      Order[]
+  @@index([available])
+}
+
+model ProductPack {
+  id        String   @id @default(cuid())
+  productId String
+  label     String
+  grams     Int
+  price     Int?     // INR whole rupees, null means price confirmed on call
+  trackStock Boolean @default(false)
+  stock     Int      @default(0)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems Order[]
+  @@index([productId])
+}
+
+model Retailer {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  area      String
+  address   String
+  pin       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+  @@index([phone])
+  @@index([pin])
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  orderNumber    String      @unique
+  trackingHash  String      @unique
+  retailerId     String
+  productId      String
+  packId         String
+  productName    String
+  packLabel      String
+  grams          Int
+  unitPrice      Int?
+  quantity       Int
+  deliveryDate   DateTime
+  slot           String
+  instructions   String?
+  total          Int?
+  status         OrderStatus @default(pending)
+  paymentMethod  String      @default("COD")
+  codCollected   Boolean     @default(false)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  retailer       Retailer    @relation(fields: [retailerId], references: [id])
+  product        Product     @relation(fields: [productId], references: [id])
+  pack           ProductPack @relation(fields: [packId], references: [id])
+  history        OrderHistory[]
+  @@index([status, createdAt])
+  @@index([retailerId, createdAt])
+  @@index([createdAt])
+}
+
+model OrderHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  note      String?
+  createdAt DateTime    @default(now())
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  @@index([orderId, createdAt])
+}
+
+model StockLog {
+  id        String   @id @default(cuid())
+  productId String
+  packId    String
+  delta     Int
+  balance   Int
+  note      String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  @@index([createdAt])
+  @@index([productId, packId])
+}
+
+model BusinessSettings {
+  id                 String   @id @default("main")
+  phone              String   @default("6366745687")
+  whatsapp           String   @default("6366745687")
+  email              String   @default("dgoldsupari@gmail.com")
+  unitAddress        String   @default("Keregundi Road, Nehru Nagar, New Market Yard, Sirsi, Uttara Kannada, Karnataka – 581402")
+  slots              String[] @default(["10 AM – 1 PM", "1 PM – 4 PM", "4 PM – 8 PM"])
+  lowStockThreshold  Int      @default(10)
+  deliveryNote       String   @default("Direct doorstep delivery to your pan shop, anywhere within Bengaluru. Outside Bengaluru we cannot deliver yet.")
+  extraPins          String[] @default([])
+  blockedPins        String[] @default([])
+  updatedAt          DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  adminId    String?
+  action     String
+  entity     String
+  entityId   String?
+  details    Json?
+  createdAt  DateTime @default(now())
+  admin      Admin?   @relation(fields: [adminId], references: [id], onDelete: SetNull)
+  @@index([createdAt])
+  @@index([entity, entityId])
+}

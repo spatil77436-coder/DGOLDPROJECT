@@ -1,0 +1,7 @@
+import { prisma } from "../config/database.js"; import { ApiError } from "../utils/ApiError.js";
+const include={packs:true};
+export async function list(includeUnavailable=false){return prisma.product.findMany({where:includeUnavailable?{}:{available:true},include,orderBy:{createdAt:"asc"}})}
+export async function getOne(id){const p=await prisma.product.findUnique({where:{id},include});if(!p)throw new ApiError(404,"Product not found");return p}
+export async function create(data){const {packs=[],...product}=data;return prisma.product.create({data:{...product,packs:{create:packs}},include})}
+export async function update(id,data){const exists=await prisma.product.findUnique({where:{id}});if(!exists)throw new ApiError(404,"Product not found");const {packs,...fields}=data;return prisma.$transaction(async tx=>{await tx.product.update({where:{id},data:fields});if(packs){for(const p of packs){const packData={label:p.label,grams:p.grams,price:p.price,trackStock:p.trackStock,stock:p.stock};if(p.id && await tx.productPack.findUnique({where:{id:p.id}})) await tx.productPack.update({where:{id:p.id},data:packData});else await tx.productPack.create({data:{...packData,productId:id}})}}return tx.product.findUnique({where:{id},include})})}
+export async function remove(id){const p=await prisma.product.findUnique({where:{id}});if(!p)throw new ApiError(404,"Product not found");return prisma.product.update({where:{id},data:{available:false}})}

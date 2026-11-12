@@ -1,0 +1,1 @@
+import {asyncHandler} from "../utils/asyncHandler.js";import {ok} from "../utils/ApiResponse.js";import * as s from "./settings.service.js";export const getPublic=asyncHandler(async(_q,res)=>ok(res,await s.get()));export const getAdmin=getPublic;export const update=asyncHandler(async(req,res)=>ok(res,await s.update(req.admin.id,req.body),"Settings saved"));
