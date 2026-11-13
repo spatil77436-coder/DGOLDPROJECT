@@ -1,0 +1,11 @@
+import { Router } from "express";
+import { login, logout, me, refresh, changePassword } from "./auth.controller.js";
+import { requireAdmin } from "../middleware/auth.middleware.js";
+import { authLimiter } from "../middleware/rateLimit.middleware.js";
+const router = Router();
+router.post("/login", authLimiter, login);
+router.post("/refresh", refresh);
+router.post("/logout", logout);
+router.get("/me", requireAdmin, me);
+router.patch("/change-password", requireAdmin, changePassword);
+export default router;

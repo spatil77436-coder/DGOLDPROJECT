@@ -1,0 +1,1 @@
+import {Router} from "express";import {getPublic,getAdmin,update} from "./settings.controller.js";import {requireAdmin} from "../middleware/auth.middleware.js";const r=Router();r.get("/public",getPublic);r.get("/",requireAdmin,getAdmin);r.patch("/",requireAdmin,update);export default r;

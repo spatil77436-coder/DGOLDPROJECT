@@ -1,0 +1,2 @@
+import { Router } from "express"; import { create, track, list, updateStatus, updateCod } from "./order.controller.js"; import { requireAdmin } from "../middleware/auth.middleware.js"; import { publicBookingLimiter, trackingLimiter } from "../middleware/rateLimit.middleware.js";
+const router=Router(); router.post("/",publicBookingLimiter,create); router.get("/track/:orderNumber",trackingLimiter,track); router.get("/",requireAdmin,list); router.patch("/:id/status",requireAdmin,updateStatus); router.patch("/:id/cod",requireAdmin,updateCod); export default router;

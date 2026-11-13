@@ -1,0 +1,10 @@
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ok } from "../utils/ApiResponse.js";
+import * as service from "./auth.service.js";
+import { env } from "../config/env.js";
+const cookieOptions = (maxAge) => ({ httpOnly: true, secure: env.COOKIE_SECURE === "true", sameSite: "lax", path: "/api/v1", maxAge });
+export const login = asyncHandler(async (req, res) => { const result = await service.login(req.body); res.cookie("dg_access", result.accessToken, cookieOptions(env.ACCESS_TOKEN_MINUTES * 60000)); res.cookie("dg_refresh", result.refreshToken, cookieOptions(env.REFRESH_TOKEN_DAYS * 86400000)); ok(res, { admin: result.admin }, "Login successful"); });
+export const refresh = asyncHandler(async (req, res) => { const result = await service.refresh(req.cookies?.dg_refresh); res.cookie("dg_access", result.accessToken, cookieOptions(env.ACCESS_TOKEN_MINUTES * 60000)); res.cookie("dg_refresh", result.refreshToken, cookieOptions(env.REFRESH_TOKEN_DAYS * 86400000)); ok(res, { admin: result.admin }, "Session refreshed"); });
+export const logout = asyncHandler(async (req, res) => { await service.logout(req.cookies?.dg_refresh); res.clearCookie("dg_access", cookieOptions(0)); res.clearCookie("dg_refresh", cookieOptions(0)); ok(res, null, "Logged out"); });
+export const me = asyncHandler(async (req, res) => ok(res, { admin: req.admin }));
+export const changePassword = asyncHandler(async (req, res) => { await service.changePassword(req.admin.id, req.body); res.clearCookie("dg_access", cookieOptions(0)); res.clearCookie("dg_refresh", cookieOptions(0)); ok(res, null, "Password changed. Please log in again."); });
