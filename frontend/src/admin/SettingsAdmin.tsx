@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Save, Plus, X, KeyRound, MapPin, Phone, Clock, Database } from "lucide-react";
+import { Save, Plus, X, KeyRound, MapPin, Phone, Clock, Database, Eye, EyeOff } from "lucide-react";
 import { db, type Settings } from "../lib/db";
 import { isValidPhone, sanitizeText } from "../lib/helpers";
 import { useStore } from "../context/StoreContext";
@@ -15,6 +15,8 @@ export default function SettingsAdmin({ settings, reload }: { settings: Settings
   const [pwCurrent, setPwCurrent] = useState("");
   const [pwNew, setPwNew] = useState("");
   const [pwBusy, setPwBusy] = useState(false);
+  const [showCurrentPw, setShowCurrentPw] = useState(false);
+  const [showNewPw, setShowNewPw] = useState(false);
 
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -56,8 +58,8 @@ export default function SettingsAdmin({ settings, reload }: { settings: Settings
   };
 
   const changePassword = async () => {
-    if (pwNew.length < 8) {
-      toast("New password must be at least 8 characters.", "error");
+    if (pwNew.length < 12) {
+      toast("New password must be at least 12 characters.", "error");
       return;
     }
     setPwBusy(true);
@@ -180,11 +182,46 @@ export default function SettingsAdmin({ settings, reload }: { settings: Settings
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
             <label className="lbl">Current Password</label>
-            <input type="password" className="field" value={pwCurrent} onChange={(e) => setPwCurrent(e.target.value)} autoComplete="current-password" />
+            <div className="relative">
+              <input
+                type={showCurrentPw ? "text" : "password"}
+                className="field !pr-11"
+                value={pwCurrent}
+                onChange={(e) => setPwCurrent(e.target.value)}
+                autoComplete="current-password"
+                placeholder="Enter current password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrentPw((visible) => !visible)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-100/40 hover:text-gold-300"
+                aria-label={showCurrentPw ? "Hide current password" : "Show current password"}
+              >
+                {showCurrentPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
+          
           <div>
-            <label className="lbl">New Password (min 8 chars)</label>
-            <input type="password" className="field" value={pwNew} onChange={(e) => setPwNew(e.target.value)} autoComplete="new-password" />
+            <label className="lbl">New Password (min 12 chars)</label>
+            <div className="relative">
+              <input
+                type={showNewPw ? "text" : "password"}
+                className="field !pr-11"
+                value={pwNew}
+                onChange={(e) => setPwNew(e.target.value)}
+                autoComplete="new-password"
+                placeholder="Enter new password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowNewPw((visible) => !visible)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-100/40 hover:text-gold-300"
+                aria-label={showNewPw ? "Hide new password" : "Show new password"}
+              >
+                {showNewPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
         </div>
         <button onClick={changePassword} disabled={pwBusy || !pwCurrent || !pwNew} className="mt-4 px-6 py-3 rounded-xl border border-gold-400/40 text-gold-300 text-sm font-bold hover:bg-gold-400/10 transition-colors disabled:opacity-40 inline-flex items-center gap-2">

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Playfair Display", serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display:"Space Grotesk", sans-serif;
+  --font-sans: "Space Grotesk", sans-serif;
 
   --color-emerald-950: #03251b;
   --color-emerald-900: #053528;
@@ -26,14 +26,14 @@ html {
 }
 
 body {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   background: #03251b;
   color: #e8f1ea;
   overflow-x: hidden;
 }
 
 .font-display {
-  font-family: "Playfair Display", serif;
+  font-family: "Space Grotesk", sans-serif;
   letter-spacing: -0.02em;
 }
 

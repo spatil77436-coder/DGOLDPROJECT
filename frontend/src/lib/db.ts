@@ -293,8 +293,11 @@ export const db = {
       return null;
     }
   },
-  async createAdmin(): Promise<void> {
-    throw new Error("Create the admin account with prisma/seed.js and ADMIN_EMAIL/ADMIN_PASSWORD.");
+  async createAdmin(email: string, password: string, setupPassword: string): Promise<void> {
+    await apiRequest("/auth/admins", {
+      method: "POST",
+      body: JSON.stringify({ email, password, setupPassword }),
+    });
   },
   async verifyAdmin(email: string, password: string): Promise<boolean> {
     try {
@@ -313,6 +316,12 @@ export const db = {
       body: JSON.stringify({ currentPassword, newPassword }),
     });
     return true;
+  },
+  async recoverAdminPassword(email: string, recoveryPassword: string, newPassword: string): Promise<void> {
+    await apiRequest("/auth/recover-password", {
+      method: "POST",
+      body: JSON.stringify({ email, recoveryPassword, newPassword }),
+    });
   },
 };
 

@@ -52,7 +52,7 @@ export default function Navbar() {
       className="fixed top-0 inset-x-0 z-50"
     >
       {/* Bengaluru-only ribbon */}
-      <div className="bg-gradient-gold text-emerald-950 text-center text-[11px] sm:text-xs font-bold tracking-wide py-1.5 px-3">
+      <div className="bg-gradient-gold text-emerald-950 text-center text-[11px] sm:text-xs  font-bold tracking-wide py-1.5 px-3">
         Now delivering across Bengaluru only · Call{" "}
         <a href={`tel:+91${settings.phone}`} className="underline underline-offset-2">
           +91 {settings.phone}

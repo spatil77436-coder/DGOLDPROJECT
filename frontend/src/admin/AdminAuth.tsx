@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, ArrowLeft, Lock, Mail, KeyRound, Eye, EyeOff, CircleCheck, LifeBuoy } from "lucide-react";
+import { ShieldCheck, ArrowLeft, Lock, Mail, KeyRound, Eye, EyeOff, CircleCheck, LifeBuoy, UserPlus } from "lucide-react";
 import Logo from "../components/Logo";
 import { db, startSession } from "../lib/db";
 import { Spinner } from "../components/ui";
@@ -18,7 +18,7 @@ function lockState(): { fails: number; until: number } {
 }
 
 export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
-  const [mode, setMode] = useState<"loading" | "login" | "forgot">("loading");
+  const [mode, setMode] = useState<"loading" | "login" | "forgot" | "create">("loading");
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -26,6 +26,10 @@ export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
   const [error, setError] = useState("");
   const [lockLeft, setLockLeft] = useState(0);
   const [recoverySent, setRecoverySent] = useState(false);
+  const [recoveryPassword, setRecoveryPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [setupPassword, setSetupPassword] = useState("");
 
   useEffect(() => {
     setMode("login");
@@ -44,7 +48,17 @@ export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
   const showForgotPassword = () => {
     setError("");
     setRecoverySent(false);
+    setRecoveryPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
     setMode("forgot");
+  };
+
+  const showCreateAdmin = () => {
+    setError("");
+    setPw("");
+    setSetupPassword("");
+    setMode("create");
   };
 
   const backToLogin = () => {
@@ -53,14 +67,66 @@ export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
     setMode("login");
   };
 
-  const submitRecovery = (e: React.FormEvent) => {
+  const submitRecovery = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     if (!validEmail) {
       setError("Enter the email address used for the admin account.");
       return;
     }
-    setRecoverySent(true);
+    if (!recoveryPassword) {
+      setError("Enter the server recovery password.");
+      return;
+    }
+    if (newPassword.length < 12) {
+      setError("The new password must be at least 12 characters.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setError("The new passwords do not match.");
+      return;
+    }
+    setBusy(true);
+    try {
+      await db.recoverAdminPassword(email.trim(), recoveryPassword, newPassword);
+      setRecoverySent(true);
+      setRecoveryPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Password recovery failed.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const submitCreateAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!validEmail) {
+      setError("Enter a valid admin email address.");
+      return;
+    }
+    if (pw.length < 12) {
+      setError("The new admin password must be at least 12 characters.");
+      return;
+    }
+    if (!setupPassword) {
+      setError("Enter the server setup password.");
+      return;
+    }
+    setBusy(true);
+    try {
+      await db.createAdmin(email.trim(), pw, setupPassword);
+      setPw("");
+      setSetupPassword("");
+      setError("");
+      setMode("login");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not create the administrator.");
+    } finally {
+      setBusy(false);
+    }
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -118,28 +184,53 @@ export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
               <Lock className="w-6 h-6 text-emerald-950" />
             </div>
             <h1 className="font-display text-2xl font-bold text-white mt-4">
-              {mode === "forgot" ? "Recover Admin Access" : "Admin Sign In"}
+              {mode === "forgot" ? "Recover Admin Access" : mode === "create" ? "Create Administrator" : "Admin Sign In"}
             </h1>
             <p className="text-emerald-100/55 text-sm mt-1.5">
               {mode === "forgot"
-                ? "Enter your admin email to get recovery instructions."
-                : "Authorised personnel only. Sessions expire after 8 hours."}
+                ? "Use the server recovery password to reset an existing admin."
+                : mode === "create"
+                  ? "Create the initial administrator account securely."
+                  : "Authorised personnel only. Sessions expire after 8 hours."}
             </p>
           </div>
 
           {mode === "loading" ? (
             <div className="py-10 flex justify-center"><Spinner className="border-white/20 border-t-gold-400" /></div>
+          ) : mode === "create" ? (
+            <form onSubmit={submitCreateAdmin} className="space-y-4">
+              <div>
+                <label className="lbl">New Admin Email</label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-100/35" />
+                  <input type="email" className="field !pl-10" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@example.com" autoComplete="email" required autoFocus />
+                </div>
+              </div>
+              <div>
+                <label className="lbl">New Admin Password</label>
+                <input type="password" className="field" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="Minimum 12 characters" autoComplete="new-password" required />
+              </div>
+              <div>
+                <label className="lbl">Server Setup Password</label>
+                <input type="password" className="field" value={setupPassword} onChange={(e) => setSetupPassword(e.target.value)} placeholder="ADMIN_PASSWORD from server settings" autoComplete="off" required />
+              </div>
+              {error && <p className="text-sm font-semibold text-rose-300 bg-rose-400/10 border border-rose-400/30 rounded-xl px-4 py-2.5">{error}</p>}
+              <button type="submit" disabled={busy} className="btn-gold w-full py-3.5 disabled:opacity-50">
+                {busy ? <Spinner /> : <><UserPlus className="w-5 h-5" /> Create Administrator</>}
+              </button>
+              <button type="button" onClick={backToLogin} className="w-full py-2 text-sm font-semibold text-emerald-100/60 hover:text-gold-300 transition-colors">
+                <ArrowLeft className="w-4 h-4 inline mr-1.5" /> Back to sign in
+              </button>
+            </form>
           ) : mode === "forgot" ? (
             recoverySent ? (
               <div className="text-center">
                 <div className="mx-auto w-14 h-14 rounded-2xl bg-emerald-400/15 border border-emerald-400/30 flex items-center justify-center">
                   <CircleCheck className="w-7 h-7 text-emerald-300" />
                 </div>
-                <h2 className="mt-5 text-lg font-bold text-white">Request received</h2>
+                <h2 className="mt-5 text-lg font-bold text-white">Password recovered</h2>
                 <p className="mt-2 text-sm leading-relaxed text-emerald-100/65">
-                  If this email belongs to an administrator, recovery instructions will be sent
-                  by your system administrator. For immediate help, contact the administrator
-                  who manages this dashboard.
+                  The administrator password has been changed and existing sessions have been signed out.
                 </p>
                 <button type="button" onClick={backToLogin} className="mt-6 w-full py-3.5 rounded-2xl border border-gold-400/40 text-gold-300 font-bold hover:bg-gold-400/10 transition-colors">
                   <ArrowLeft className="w-4 h-4 inline mr-2" /> Back to sign in
@@ -154,9 +245,21 @@ export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
                     <input type="email" className="field !pl-10" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@example.com" autoComplete="email" required autoFocus />
                   </div>
                 </div>
+                <div>
+                  <label className="lbl">Server Recovery Password</label>
+                  <input type="password" className="field" value={recoveryPassword} onChange={(e) => setRecoveryPassword(e.target.value)} placeholder="ADMIN_PASSWORD from server settings" autoComplete="off" required />
+                </div>
+                <div>
+                  <label className="lbl">New Password</label>
+                  <input type="password" className="field" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Minimum 12 characters" autoComplete="new-password" required />
+                </div>
+                <div>
+                  <label className="lbl">Confirm New Password</label>
+                  <input type="password" className="field" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Repeat new password" autoComplete="new-password" required />
+                </div>
                 {error && <p className="text-sm font-semibold text-rose-300 bg-rose-400/10 border border-rose-400/30 rounded-xl px-4 py-2.5">{error}</p>}
-                <button type="submit" className="btn-gold w-full py-3.5">
-                  <LifeBuoy className="w-5 h-5" /> Request recovery
+                <button type="submit" disabled={busy} className="btn-gold w-full py-3.5 disabled:opacity-50">
+                  {busy ? <Spinner /> : <><LifeBuoy className="w-5 h-5" /> Reset Password</>}
                 </button>
                 <button type="button" onClick={backToLogin} className="w-full py-2 text-sm font-semibold text-emerald-100/60 hover:text-gold-300 transition-colors">
                   <ArrowLeft className="w-4 h-4 inline mr-1.5" /> Back to sign in
@@ -200,6 +303,9 @@ export default function AdminAuth({ onSuccess }: { onSuccess: () => void }) {
               </button>
               <button type="button" onClick={showForgotPassword} className="w-full text-sm font-semibold text-gold-300/80 hover:text-gold-300 transition-colors">
                 Forgot password?
+              </button>
+              <button type="button" onClick={showCreateAdmin} className="w-full text-sm font-semibold text-emerald-100/55 hover:text-gold-300 transition-colors">
+                <UserPlus className="w-4 h-4 inline mr-1.5" /> Create administrator
               </button>
             </form>
           )}

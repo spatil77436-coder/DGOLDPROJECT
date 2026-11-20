@@ -8,3 +8,11 @@ export const refresh = asyncHandler(async (req, res) => { const result = await s
 export const logout = asyncHandler(async (req, res) => { await service.logout(req.cookies?.dg_refresh); res.clearCookie("dg_access", cookieOptions(0)); res.clearCookie("dg_refresh", cookieOptions(0)); ok(res, null, "Logged out"); });
 export const me = asyncHandler(async (req, res) => ok(res, { admin: req.admin }));
 export const changePassword = asyncHandler(async (req, res) => { await service.changePassword(req.admin.id, req.body); res.clearCookie("dg_access", cookieOptions(0)); res.clearCookie("dg_refresh", cookieOptions(0)); ok(res, null, "Password changed. Please log in again."); });
+export const recoverPassword = asyncHandler(async (req, res) => {
+  await service.recoverPassword(req.body);
+  ok(res, null, "Password recovered. Please sign in.");
+});
+export const createAdmin = asyncHandler(async (req, res) => {
+  const admin = await service.createAdmin(req.body);
+  ok(res, { admin: { id: admin.id, email: admin.email } }, "Administrator created");
+});
