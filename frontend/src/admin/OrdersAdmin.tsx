@@ -53,8 +53,8 @@ export default function OrdersAdmin({ orders, reload }: { orders: Order[]; reloa
       await db.updateOrder(updated);
       await reload();
       toast(`Order ${o.id} → ${STATUS_LABEL[status]}`, status === "cancelled" ? "info" : "success");
-    } catch {
-      toast("Could not update the order.", "error");
+    } catch (error) {
+      toast(error instanceof Error ? error.message : "Could not update the order.", "error");
     } finally {
       setBusyId(null);
     }

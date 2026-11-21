@@ -1,5 +1,5 @@
 import { prisma } from "../config/database.js"; import { ApiError } from "../utils/ApiError.js"; import { makeOrderNumber,makeTrackingToken,sha256 } from "../utils/ids.js";
-const publicSelect={id:true,orderNumber:true,status:true,createdAt:true,deliveryDate:true,slot:true,productName:true,packLabel:true,grams:true,quantity:true,total:true,history:{select:{status:true,createdAt:true},orderBy:{createdAt:"asc"}}};
+const publicSelect={id:true,orderNumber:true,status:true,createdAt:true,deliveryDate:true,slot:true,productName:true,packLabel:true,grams:true,unitPrice:true,quantity:true,total:true,instructions:true,retailer:{select:{name:true,phone:true,area:true,address:true,pin:true}},history:{select:{status:true,createdAt:true},orderBy:{createdAt:"asc"}}};
 export async function create(input){
  const {customer,item,deliveryDate,slot,instructions}=input;
  if(!customer||!item||!deliveryDate||!slot)throw new ApiError(422,"Booking details are incomplete");
@@ -25,5 +25,36 @@ export async function create(input){
 }
 export async function track(orderNumber,phone){if(!phone)throw new ApiError(400,"Phone number is required");const order=await prisma.order.findFirst({where:{orderNumber,retailer:{phone}},select:publicSelect});if(!order)throw new ApiError(404,"Order not found. Check the order ID and phone number.");return order}
 export async function list(query){const page=Math.max(1,Number(query.page)||1),limit=Math.min(100,Math.max(1,Number(query.limit)||50));const where=query.status?{status:query.status}:{};const [items,total]=await prisma.$transaction([prisma.order.findMany({where,include:{retailer:true,history:{orderBy:{createdAt:"asc"}}},orderBy:{createdAt:"desc"},skip:(page-1)*limit,take:limit}),prisma.order.count({where})]);return {items,total,page,limit}}
-export async function updateStatus(adminId,id,{status,note}){const allowed=["pending","confirmed","preparing","out_for_delivery","delivered","cancelled"];if(!allowed.includes(status))throw new ApiError(422,"Invalid order status");return prisma.$transaction(async tx=>{const order=await tx.order.findUnique({where:{id}});if(!order)throw new ApiError(404,"Order not found");if(order.status==="delivered"||order.status==="cancelled")throw new ApiError(409,"This order is already closed");if(status==="cancelled"&&order.status!=="cancelled"){const pack=await tx.productPack.findUnique({where:{id:order.packId}});if(pack?.trackStock)await tx.productPack.update({where:{id:pack.id},data:{stock:{increment:order.quantity}}})}const updated=await tx.order.update({where:{id},data:{status,history:{create:{status,note:note||null}}},include:{retailer:true,history:{orderBy:{createdAt:"asc"}}}});await tx.auditLog.create({data:{adminId,action:"ORDER_STATUS_UPDATED",entity:"Order",entityId:id,details:{from:order.status,to:status,note:note||null}}});return updated})}
+export async function updateStatus(adminId,id,{status,note}) {
+ const allowed=["pending","confirmed","preparing","out_for_delivery","delivered","cancelled"];
+ if(!allowed.includes(status))throw new ApiError(422,"Invalid order status");
+ return prisma.$transaction(async tx=>{
+  const order=await tx.order.findUnique({where:{id}});
+  if(!order)throw new ApiError(404,"Order not found");
+  const reopening=(status==="pending"&&(order.status==="cancelled"||order.status==="delivered"));
+  if(!reopening&&order.status==="delivered")throw new ApiError(409,"A delivered order is already closed");
+  if(status==="cancelled"&&order.status==="cancelled")throw new ApiError(409,"This order is already cancelled");
+
+  if(status==="cancelled"&&order.status!=="cancelled"){
+   const pack=await tx.productPack.findUnique({where:{id:order.packId}});
+   if(pack?.trackStock){
+    const restored=await tx.productPack.update({where:{id:pack.id},data:{stock:{increment:order.quantity}}});
+    await tx.stockLog.create({data:{productId:order.productId,packId:pack.id,delta:order.quantity,balance:restored.stock,note:`Order ${order.orderNumber} cancelled`}});
+   }
+  }
+  if(order.status==="cancelled"&&status==="pending"){
+   const pack=await tx.productPack.findUnique({where:{id:order.packId}});
+   if(pack?.trackStock){
+    const changed=await tx.productPack.updateMany({where:{id:pack.id,stock:{gte:order.quantity}},data:{stock:{decrement:order.quantity}}});
+    if(!changed.count)throw new ApiError(409,"Insufficient stock to reopen this order");
+    const reduced=await tx.productPack.findUnique({where:{id:pack.id}});
+    await tx.stockLog.create({data:{productId:order.productId,packId:pack.id,delta:-order.quantity,balance:reduced.stock,note:`Order ${order.orderNumber} reopened`}});
+   }
+  }
+
+  const updated=await tx.order.update({where:{id},data:{status,history:{create:{status,note:note||null}}},include:{retailer:true,history:{orderBy:{createdAt:"asc"}}}});
+  await tx.auditLog.create({data:{adminId,action:"ORDER_STATUS_UPDATED",entity:"Order",entityId:id,details:{from:order.status,to:status,note:note||null}}});
+  return updated;
+ });
+}
 export async function updateCod(adminId,id,codCollected){if(typeof codCollected!=="boolean")throw new ApiError(422,"codCollected must be boolean");const order=await prisma.order.findUnique({where:{id}});if(!order)throw new ApiError(404,"Order not found");const updated=await prisma.order.update({where:{id},data:{codCollected}});await prisma.auditLog.create({data:{adminId,action:"COD_COLLECTION_UPDATED",entity:"Order",entityId:id,details:{codCollected}}});return updated}

@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;family=Space+Grotesk:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-highest": "#35352e",
+        "tertiary-container": "#1ace62",
+        "tertiary": "#49eb7b",
+        "primary-container": "#e5a93c",
+        "surface": "#14140e",
+        "secondary-fixed-dim": "#aecebe",
+        "primary-fixed-dim": "#fabc4d",
+        "outline": "#9d8f7c",
+        "on-tertiary": "#003915",
+        "surface-dim": "#14140e",
+        "on-primary-container": "#5e4000",
+        "inverse-on-surface": "#31312a",
+        "surface-tint": "#fabc4d",
+        "primary-fixed": "#ffdead",
+        "tertiary-fixed": "#66ff8e",
+        "inverse-surface": "#e5e2d9",
+        "on-secondary-container": "#a1bfb0",
+        "error": "#ffb4ab",
+        "on-tertiary-container": "#005121",
+        "secondary": "#aecebe",
+        "surface-container-lowest": "#0e0f09",
+        "on-background": "#e5e2d9",
+        "on-tertiary-fixed-variant": "#005322",
+        "on-secondary-fixed": "#042016",
+        "secondary-container": "#334f43",
+        "on-primary": "#432c00",
+        "outline-variant": "#504535",
+        "secondary-fixed": "#caead9",
+        "surface-container-high": "#2a2a24",
+        "primary": "#ffc665",
+        "background": "#14140e",
+        "on-secondary": "#1a362b",
+        "on-secondary-fixed-variant": "#314c40",
+        "surface-bright": "#3a3933",
+        "inverse-primary": "#7e5700",
+        "error-container": "#93000a",
+        "surface-variant": "#35352e",
+        "tertiary-fixed-dim": "#3de273",
+        "on-surface": "#e5e2d9",
+        "on-error-container": "#ffdad6",
+        "on-primary-fixed": "#281900",
+        "surface-container": "#20201a",
+        "surface-container-low": "#1c1c16",
+        "on-surface-variant": "#d4c4b0",
+        "on-tertiary-fixed": "#002109",
+        "on-primary-fixed-variant": "#604100",
+        "on-error": "#690005"
+      },
+      borderRadius: {
+        "DEFAULT": "1rem",
+        "lg": "2rem",
+        "xl": "3rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "space-sm": "0.5rem",
+        "margin": "1.25rem",
+        "gutter": "1.5rem",
+        "gutter-desktop": "2.5rem",
+        "space-xl": "2.5rem",
+        "space-lg": "1.5rem",
+        "margin-desktop": "4rem",
+        "space-xs": "0.25rem",
+        "space-2xl": "4rem",
+        "space-md": "1rem"
+      },
+      fontFamily: {
+        "body-lg": ["Plus Jakarta Sans"],
+        "headline-md": ["EB Garamond"],
+        "display-hero": ["EB Garamond"],
+        "headline-lg-mobile": ["EB Garamond"],
+        "display-hero-mobile": ["EB Garamond"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "label-lg": ["Space Grotesk"],
+        "label-md": ["Space Grotesk"],
+        "body-md": ["Plus Jakarta Sans"],
+        "label-sm": ["Space Grotesk"],
+        "headline-lg": ["EB Garamond"],
+        "headline-sm": ["Plus Jakarta Sans"]
+      },
+      fontSize: {
+        "body-lg": ["1.125rem", {"lineHeight": "1.7", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "headline-md": ["2rem", {"lineHeight": "1.3", "letterSpacing": "-0.005em", "fontWeight": "500"}],
+        "display-hero": ["4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "headline-lg-mobile": ["1.875rem", {"lineHeight": "1.25", "letterSpacing": "0em", "fontWeight": "600"}],
+        "display-hero-mobile": ["2.5rem", {"lineHeight": "1.15", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "body-sm": ["0.875rem", {"lineHeight": "1.5", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "label-lg": ["0.875rem", {"lineHeight": "1.2", "letterSpacing": "0.08em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+        "body-md": ["1rem", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "1.2", "letterSpacing": "0.12em", "fontWeight": "500"}],
+        "headline-lg": ["2.75rem", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "headline-sm": ["1.375rem", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "700"}]
+      }
+    }
+  }
+};
+</script>
+<style>
+:root {
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+
+/* Framer Motion whileInView Initial States */
+.motion-fade-up {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+  will-change: transform, opacity;
+}
+.motion-fade-up.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Stagger item delays for children */
+.stagger-container > .motion-child {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 0.75s var(--ease-out-expo), transform 0.75s var(--ease-out-expo);
+  will-change: transform, opacity;
+}
+.stagger-container.in-view > .motion-child:nth-child(1) { transition-delay: 0.05s; }
+.stagger-container.in-view > .motion-child:nth-child(2) { transition-delay: 0.12s; }
+.stagger-container.in-view > .motion-child:nth-child(3) { transition-delay: 0.19s; }
+.stagger-container.in-view > .motion-child:nth-child(4) { transition-delay: 0.26s; }
+.stagger-container.in-view > .motion-child:nth-child(5) { transition-delay: 0.33s; }
+.stagger-container.in-view > .motion-child:nth-child(6) { transition-delay: 0.40s; }
+.stagger-container.in-view > .motion-child {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Kinetic Mask Header Reveal */
+.mask-reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.mask-reveal-word > span {
+  display: inline-block;
+  transform: translate3d(0, 115%, 0);
+  animation: wordSlideUp 0.95s var(--ease-out-expo) forwards;
+}
+
+@keyframes wordSlideUp {
+  0% { transform: translate3d(0, 115%, 0); opacity: 0; }
+  100% { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+
+/* Sinusoidal Floating Badges */
+@keyframes floatSubtle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(0.5deg); }
+}
+.animate-float-subtle {
+  animation: floatSubtle 4.5s ease-in-out infinite;
+}
+.animate-float-badge {
+  animation: floatGentle 5.2s ease-in-out infinite;
+}
+
+/* Metallic / Gold Shimmer Sweep */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -120%;
+  width: 80%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: rotate(25deg);
+  transition: none;
+}
+.shimmer-btn:hover::after {
+  animation: shimmerSweep 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes shimmerSweep {
+  0% { left: -120%; }
+  100% { left: 160%; }
+}
+
+/* Lively Spring Click Animation */
+.spring-bump {
+  animation: bumpSpring 0.4s var(--ease-spring);
+}
+@keyframes bumpSpring {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+/* 3D Tilt Card Base */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+/* Magnetic Button Container */
+.magnetic-wrap {
+  display: inline-block;
+  transition: transform 0.28s var(--ease-out-expo);
+  will-change: transform;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  .motion-fade-up,
+  .stagger-container > .motion-child,
+  .mask-reveal-word > span {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .animate-float-subtle,
+  .animate-float-badge {
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Fixed Navigation Bar -->
+<div class="fixed top-0 inset-x-0 z-50 flex flex-col">
+<!-- Top Announce Bar -->
+<div class="w-full bg-surface-container-lowest/95 border-b border-outline-variant/30 py-1.5 px-margin md:px-margin-desktop backdrop-blur-md">
+<div class="max-w-7xl mx-auto flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm overflow-hidden">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container/60 border border-primary/40 text-primary font-label-sm text-label-sm uppercase tracking-wider shadow-[0_0_12px_rgba(229,169,60,0.2)] animate-float-subtle">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container animate-pulse"></span>
+          Origin Sirsi
+        </span>
+<p class="font-label-md text-label-md text-on-surface-variant truncate">
+          Now delivering across Bengaluru only <span class="text-outline-variant mx-1">·</span> Fresh Sirsi Batch 2026
+        </p>
+</div>
+<div class="flex items-center gap-space-md shrink-0">
+<a class="inline-flex items-center gap-1.5 text-primary hover:text-primary-fixed transition-colors font-label-md text-label-md tracking-wider magnetic-wrap" href="tel:+916366745687">
+<span class="material-symbols-outlined text-[14px]">call</span>
+<span class="hidden sm:inline">+91 6366745687</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Main Floating Header -->
+<header class="w-full py-2.5 px-margin md:px-margin-desktop">
+<div class="max-w-7xl mx-auto">
+<div class="h-20 rounded-full bg-surface-container-low/80 backdrop-blur-xl border border-primary/25 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7),0_0_24px_-4px_rgba(229,169,60,0.15)] px-space-md md:px-space-xl flex items-center justify-between gap-space-md">
+<a class="flex items-center gap-3 shrink-0 group magnetic-wrap" data-path="home" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center text-primary group-hover:border-primary group-hover:scale-105 transition-all shadow-[0_0_16px_rgba(255,198,101,0.15)]">
+<span class="material-symbols-outlined text-[20px]">crown</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-sm md:text-headline-md tracking-tight text-primary leading-none font-bold">D Gold</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-[0.2em] uppercase leading-none mt-1">Premium Supari</span>
+</div>
+</a>
+<nav class="hidden lg:flex items-center gap-space-lg" data-active-classes="text-primary font-bold after:w-full after:bg-primary">
+<a class="relative py-2 font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary hover:after:w-full after:transition-all after:duration-300" data-path="about" href="#">About</a>
+<a class="relative py-2 font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary hover:after:w-full after:transition-all after:duration-300" data-path="product" href="#">Product</a>
+<a class="relative py-2 font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary hover:after:w-full after:transition-all after:duration-300" data-path="why-d-gold" href="#">Why D GOLD</a>
+<a class="relative py-2 font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary hover:after:w-full after:transition-all after:duration-300" data-path="delivery" href="#">Delivery</a>
+<a class="relative py-2 font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary hover:after:w-full after:transition-all after:duration-300" data-path="faq" href="#">FAQ</a>
+<a class="relative py-2 font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-colors after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary hover:after:w-full after:transition-all after:duration-300" data-path="contact" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-space-sm sm:gap-space-md shrink-0">
+<a aria-label="Call Concierge" class="w-10 h-10 rounded-full bg-secondary-container/40 border border-outline-variant/60 flex items-center justify-center text-on-surface hover:text-primary hover:border-primary/50 transition-all magnetic-wrap" href="tel:+916366745687">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+<a class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container border border-outline-variant/50 text-on-surface-variant hover:text-on-surface hover:border-primary/40 transition-all font-label-md text-label-md uppercase tracking-wider magnetic-wrap" data-path="track-order" href="#">
+<span class="material-symbols-outlined text-[18px] text-primary">local_shipping</span>
+<span>Track Order</span>
+</a>
+<div class="magnetic-wrap">
+<a class="shimmer-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-lg text-label-lg uppercase tracking-wider font-bold transition-all shadow-[0_4px_20px_rgba(229,169,60,0.35)] hover:shadow-[0_6px_28px_rgba(229,169,60,0.5)] active:scale-95" data-path="book-now" href="#order-calculator">
+<span>Book Now</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 ml-1">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+</div>
+<!-- Main Experience Container -->
+<main class="w-full pt-32 bg-surface min-h-screen">
+<div class="flex flex-col w-full relative overflow-hidden">
+<!-- Living Ambient WebGL Shader Asset -->
+
+<!-- Ambient Golden and Emerald Glow Orbs -->
+<div class="pointer-events-none absolute -top-40 right-0 w-[550px] h-[550px] bg-primary/10 rounded-full blur-[140px] z-0"></div>
+<div class="pointer-events-none absolute top-[700px] -left-32 w-[600px] h-[600px] bg-secondary-container/30 rounded-full blur-[160px] z-0"></div>
+<div class="pointer-events-none absolute top-[1800px] right-10 w-[500px] h-[500px] bg-primary-container/15 rounded-full blur-[150px] z-0"></div>
+<!-- Hero Section -->
+<section class="relative z-10 w-full px-margin md:px-margin-desktop py-space-xl md:py-space-2xl">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-center">
+<!-- Left Column: Kinetic Framer-Style Mask Entrance Typography -->
+<div class="lg:col-span-7 flex flex-col items-start space-y-space-md">
+<!-- City Availability Tag (Subtle Sinusoidal Hover) -->
+<div class="animate-float-subtle inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high/80 border border-primary/20 backdrop-blur-md shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span class="material-symbols-outlined text-primary text-[16px]">location_on</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Bengaluru Only · Direct Doorstep Delivery · Fresh Sirsi Batch</span>
+</div>
+<!-- Hero Title with Staggered Word Mask Reveals -->
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight leading-[1.08] font-bold">
+<span class="mask-reveal-word"><span style="animation-delay: 0.1s;">Experience</span></span> <br/>
+<span class="mask-reveal-word"><span class="text-on-surface" style="animation-delay: 0.22s;">Premium Quality</span></span> <br/>
+<span class="mask-reveal-word">
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed to-primary-container drop-shadow-[0_4px_24px_rgba(229,169,60,0.3)]" style="animation-delay: 0.35s;">
+                Chali Cut Supari
+              </span>
+</span>
+</h1>
+<!-- Supporting Narrative Body -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed pt-2 motion-fade-up">
+            D GOLD brings hygienically processed, 100% natural chali cut supari straight from our licensed processing unit in Sirsi to your pan shop — anywhere in Bengaluru. Book online in a minute, confirm details on one quick call, and receive pure stock at your counter.
+          </p>
+<!-- CTAs with Magnetic Effect & Shimmer -->
+<div class="flex flex-wrap items-center gap-space-md pt-4 motion-fade-up">
+<div class="magnetic-wrap">
+<a class="shimmer-btn group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg uppercase tracking-wider font-bold transition-all shadow-xl hover:scale-[1.02] active:scale-95 overflow-hidden" href="#order-calculator">
+<span class="relative z-10">Book Now</span>
+<span class="material-symbols-outlined relative z-10 text-[20px] transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="magnetic-wrap">
+<a class="inline-flex items-center gap-2.5 px-7 py-4 rounded-full bg-surface-container-high/70 hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg uppercase tracking-wider transition-all backdrop-blur-md hover:text-primary border border-outline-variant/30" href="#product-features">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Explore Products</span>
+</a>
+</div>
+</div>
+<!-- Quick Direct Chat Strip -->
+<div class="pt-2 flex items-center gap-3 motion-fade-up">
+<a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container/50 hover:bg-secondary-container text-tertiary font-label-sm text-label-sm tracking-wider transition-all border border-secondary/30" href="https://wa.me/916366745687" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-tertiary">chat</span>
+<span>Chat on WhatsApp · +91 6366745687</span>
+</a>
+<span class="text-on-surface-variant font-label-sm text-label-sm">· Dispatches within 3 hrs</span>
+</div>
+</div>
+<!-- Right Column: Interactive 3D Pouch Packaging Showcase with Spring Dampening -->
+<div class="lg:col-span-5 relative flex justify-center perspective-[1000px] mt-6 lg:mt-0 motion-fade-up">
+<!-- Floating FSSAI License Pill Top -->
+<div class="animate-float-badge absolute -top-4 -right-2 md:right-2 z-30 flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-surface-container-high/90 border border-primary/20 backdrop-blur-xl shadow-xl">
+<div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface">FSSAI Licensed</span>
+<span class="font-label-sm text-[10px] text-primary tracking-wider font-mono">21226172000535</span>
+</div>
+</div>
+<!-- 3D Cursor Responsive Packaging Card Container -->
+<div class="tilt-card relative w-full max-w-[420px] rounded-xl bg-gradient-to-b from-secondary-container/40 via-surface-container-high/60 to-surface-container-lowest/80 border border-primary/30 backdrop-blur-2xl p-6 sm:p-8 shadow-2xl overflow-hidden group" id="pouch-3d-card">
+<!-- Backlight Halo -->
+<div class="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/25 rounded-full blur-[80px] pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
+<!-- Pouch Top Badge -->
+<div class="w-full flex items-center justify-between pb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">stars</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Heritage Sirsi Pack</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-highest border border-outline-variant/30 text-[10px] font-label-sm tracking-wider uppercase text-on-surface-variant">500g Net</span>
+</div>
+<!-- Packaging Graphic Representation Card -->
+<div class="relative w-full aspect-[4/5] rounded-lg bg-gradient-to-b from-[#0e271d] via-[#091b14] to-[#040f0b] border border-primary/20 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
+<!-- Brand Crest -->
+<div class="text-center flex flex-col items-center pt-2">
+<div class="w-14 h-14 rounded-full bg-surface-container/80 border border-primary/40 flex items-center justify-center text-primary mb-2 shadow-md">
+<span class="font-headline-md text-headline-sm font-bold text-primary">D</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary tracking-wider uppercase font-bold leading-none">D GOLD</h2>
+<span class="font-label-sm text-[10px] tracking-[0.3em] uppercase text-on-surface-variant mt-1">Premium Quality</span>
+<div class="mt-3 px-3 py-1 rounded bg-primary/10 border border-primary/20">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Chali Cutting Supari</span>
+</div>
+</div>
+<!-- Arecanut Visual Mock inside pouch bowl -->
+<div class="relative my-4 flex items-center justify-center">
+<div class="relative w-44 h-44 rounded-full bg-surface-container-highest/60 border border-primary/20 flex items-center justify-center shadow-2xl p-2">
+<img class="w-full h-full object-cover rounded-full shadow-md transition-transform duration-700 group-hover:scale-105" data-alt="Close up luxury studio shot of handcrafted pure dried chali cut supari arecanut pieces nestled inside a polished dark brass artisanal bowl, showcasing uniform diamond facets, clean natural grain, golden tones, and hygienic finish against deep velvet emerald green background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQy-iBAfGBO3KHfhf0l6LHGTsI9eiVOGiDa_LMeD9XvpbJSupsp9-pJNmJiQyom5d7PYHTJaepsEuucxdaC3FCjymXskXbx7VK7yXQZHvloa1ezqMzXHAklkgPySATZqxY9i4HLWg6oTQLlNFfK46-nSTKaRSEsZxKtLPr52jlHdkiC1H_5MsIJ9WefcWzN0wQsskKruCnXdnZmmWv2bh7dDcmihB9WdhBE3De73s"/>
+<!-- Hotspot 1: Vacuum Seal -->
+<button aria-label="Freshness inspection hotspot" class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary animate-pulse shadow-md transition-transform hover:scale-125" onclick="showHotspotTip('Freshness Seal', 'Multi-barrier aluminium foil layer keeps natural moisture locked for 180 days.')" type="button">
+<span class="material-symbols-outlined text-[14px]">add</span>
+</button>
+<!-- Hotspot 2: Clean Cut -->
+<button aria-label="Cut precision inspection hotspot" class="absolute bottom-2 -left-2 w-6 h-6 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary shadow-md transition-transform hover:scale-125" onclick="showHotspotTip('Precision Chali Cut', 'Uniform mechanical slicing ensures identical bite texture and flawless pan foldability.')" type="button">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Bottom Guarantee Badges -->
+<div class="flex items-center justify-between text-[10px] font-label-sm text-on-surface-variant pt-2 border-t border-outline-variant/20">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-tertiary">eco</span> 100% Natural</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-primary">security</span> No Preservatives</span>
+</div>
+</div>
+<!-- Micro Hotspot Tip Bubble Display -->
+<div class="hidden mt-3 p-3 rounded-lg bg-surface-container-highest/90 text-on-surface text-body-sm transition-all shadow-md border border-primary/20" id="hotspot-popup">
+<div class="flex items-center justify-between">
+<strong class="font-label-sm text-label-sm uppercase text-primary" id="hotspot-title"></strong>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('hotspot-popup').classList.add('hidden')">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant mt-1" id="hotspot-desc"></p>
+</div>
+<!-- Floating Bottom Badge: Doorstep Delivery -->
+<div class="mt-4 flex items-center justify-between px-4 py-2.5 rounded-lg bg-surface-container-high/80 border border-outline-variant/20 shadow-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">electric_moped</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-on-surface font-semibold">Doorstep Delivery</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Central, East, South &amp; West BLR</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase font-bold">Active</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: About & Label Transparency (Editorial Split) -->
+<section class="relative z-10 w-full px-margin md:px-margin-desktop py-space-2xl bg-surface-container-lowest/60 backdrop-blur-md">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
+<!-- Left Column: Brand Thesis -->
+<div class="lg:col-span-5 space-y-space-md motion-fade-up">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/50 border border-secondary/30 text-secondary font-label-sm text-label-sm uppercase tracking-wider animate-float-subtle">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Agrarian Heritage</span>
+</div>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-on-surface leading-tight font-bold">
+              A premium supari brand, <br/>
+<span class="text-primary">built for master pan shops.</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Pan artisans require arecanut that never compromises texture or taste. Grown in the nutrient-dense soil of Sirsi, Uttara Kannada, each nut is harvested at peak maturity, sunlight cured, and sliced into the revered Chali cut.
+            </p>
+<div class="grid grid-cols-2 gap-3 pt-2">
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant/30 shadow-sm tilt-card">
+<span class="font-headline-md text-headline-md text-primary font-bold">0%</span>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mt-1">Chemical Bleach or Additives</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant/30 shadow-sm tilt-card">
+<span class="font-headline-md text-headline-md text-secondary font-bold">100%</span>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mt-1">Authentic Sirsi Single-Origin</p>
+</div>
+</div>
+<div class="space-y-3 pt-2">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">Unadulterated natural crunch with high longevity</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">Precision calibrated size for effortless paan folding</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">Direct consignments from Sirsi packing facility</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Gold-Embossed Transparency Board -->
+<div class="lg:col-span-7 flex flex-col motion-fade-up">
+<div class="rounded-xl bg-surface-container-high/90 border border-primary/20 backdrop-blur-xl shadow-2xl p-6 sm:p-8">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-outline-variant/30 gap-4">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Straight From The Label</span>
+<h3 class="font-headline-md text-headline-sm text-on-surface mt-1">Everything we promise is printed on every pouch</h3>
+</div>
+<!-- Tab Switcher for Details -->
+<div class="inline-flex p-1 rounded-full bg-surface-container-lowest border border-outline-variant/30">
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-semibold bg-primary text-on-primary transition-all magnetic-wrap" id="btn-specs" onclick="switchTransparencyTab('specs')">Pouch Label</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-semibold text-on-surface-variant hover:text-on-surface transition-all magnetic-wrap" id="btn-lab" onclick="switchTransparencyTab('lab')">Lab Report</button>
+</div>
+</div>
+<!-- Tab Content 1: Pouch Label Specs -->
+<div class="pt-6 space-y-5" id="tab-specs">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-surface-container-low/70 border border-outline-variant/20 tilt-card">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Ingredients</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-1">Arecanut Supari</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant mt-0.5">Nothing else. Absolutely zero sweetening or masking agents.</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low/70 border border-outline-variant/20 tilt-card">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Our Promise</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-1">No Preservatives</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant mt-0.5">No artificial flavours, colours, or synthetic perfuming sprays.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-4 rounded-lg bg-surface-container-low/70 border border-outline-variant/20 tilt-card">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider">Processing Standard</span>
+<p class="font-body-md text-body-md font-bold text-on-surface mt-1">Hygienic Clean Air</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">De-dusted &amp; double-screened</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low/70 border border-outline-variant/20 tilt-card">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider">Best Before</span>
+<p class="font-body-md text-body-md font-bold text-on-surface mt-1">6 Months Shelf Life</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">From tamper-evident pack date</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low/70 border border-outline-variant/20 tilt-card">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider">Net Weight Unit</span>
+<p class="font-body-md text-body-md font-bold text-on-surface mt-1">500g Commercial Pack</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Moisture-sealed foil envelope</p>
+</div>
+</div>
+<!-- Packing Registry Details -->
+<div class="p-4 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[28px]">factory</span>
+<div>
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Packed &amp; Marketed By</span>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">D GOLD SUPARI, Main Road, Sirsi, Uttara Kannada - 581402</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container/40 border border-secondary/30">
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+<span class="font-label-sm text-[11px] text-secondary font-mono">FSSAI Certified Unit</span>
+</div>
+</div>
+</div>
+<!-- Tab Content 2: Lab Report (Initially Hidden) -->
+<div class="hidden pt-6 space-y-4" id="tab-lab">
+<div class="p-4 rounded-lg bg-surface-container-low/80 border border-outline-variant/30">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">science</span>
+<h4 class="font-label-md text-label-md uppercase tracking-wider text-on-surface font-bold">Independent Batch Assay (Batch #DG-2026-03)</h4>
+</div>
+<span class="font-label-sm text-tertiary font-mono text-label-sm">PASS / CERTIFIED</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 text-center">
+<div class="p-3 rounded bg-surface-container border border-outline-variant/20">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Moisture Content</span>
+<p class="font-headline-sm text-headline-sm text-primary font-bold mt-1">9.2%</p>
+<span class="font-label-sm text-[9px] text-on-surface-variant">Std: &lt; 11%</span>
+</div>
+<div class="p-3 rounded bg-surface-container border border-outline-variant/20">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Total Ash</span>
+<p class="font-headline-sm text-headline-sm text-primary font-bold mt-1">1.8%</p>
+<span class="font-label-sm text-[9px] text-on-surface-variant">Std: &lt; 2.5%</span>
+</div>
+<div class="p-3 rounded bg-surface-container border border-outline-variant/20">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Aflatoxins</span>
+<p class="font-headline-sm text-headline-sm text-tertiary font-bold mt-1">ND</p>
+<span class="font-label-sm text-[9px] text-on-surface-variant">Not Detected</span>
+</div>
+<div class="p-3 rounded bg-surface-container border border-outline-variant/20">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Heavy Metals</span>
+<p class="font-headline-sm text-headline-sm text-tertiary font-bold mt-1">Below LOQ</p>
+<span class="font-label-sm text-[9px] text-on-surface-variant">FSSAI Compliant</span>
+</div>
+</div>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant italic">
+                  * Complete NABL-accredited test certificate available on request during bulk order concierge call.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Product Specifications & Interactive Order Calculator -->
+<section class="relative z-10 w-full px-margin md:px-margin-desktop py-space-2xl" id="order-calculator">
+<div class="max-w-7xl mx-auto space-y-space-2xl">
+<!-- Section Title Header -->
+<div class="text-center max-w-3xl mx-auto space-y-space-sm motion-fade-up" id="product-features">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Agrarian Purity Standards</span>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-on-surface font-bold">
+            What makes D GOLD Chali Cut unmistakably premium?
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Engineered for consistent pan preparation with distinct aroma, marbled texture, and zero debris.
+          </p>
+</div>
+<!-- 6-Card Feature Bento Mosaic with Staggered Container In-View -->
+<div class="stagger-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="motion-child tilt-card p-6 rounded-xl bg-surface-container-high/60 border border-outline-variant/25 backdrop-blur-md shadow-lg hover:border-primary/50 hover:bg-surface-container-highest/70 transition-all group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/30 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">forest</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-4">100% Natural Arecanut</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              Harvested exclusively from heritage areca groves in the lush Western Ghats region of Sirsi. Pure, unblended whole harvest.
+            </p>
+</div>
+<!-- Card 2 -->
+<div class="motion-child tilt-card p-6 rounded-xl bg-surface-container-high/60 border border-outline-variant/25 backdrop-blur-md shadow-lg hover:border-primary/50 hover:bg-surface-container-highest/70 transition-all group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/30 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">diamond</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-4">Precision Chali Cut</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              Precision sliced into geometric diamond pieces. Gives an unmatched smooth crunch without splintering or sharp powder residue.
+            </p>
+</div>
+<!-- Card 3 -->
+<div class="motion-child tilt-card p-6 rounded-xl bg-surface-container-high/60 border border-outline-variant/25 backdrop-blur-md shadow-lg hover:border-primary/50 hover:bg-surface-container-highest/70 transition-all group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/30 flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">sanitizer</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-4">Hygienically Cleaned</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              Double aspirator de-stoned, air washed, and processed in a modern FSSAI-compliant cleanroom facility before manual grading.
+            </p>
+</div>
+<!-- Card 4 -->
+<div class="motion-child tilt-card p-6 rounded-xl bg-surface-container-high/60 border border-outline-variant/25 backdrop-blur-md shadow-lg hover:border-primary/50 hover:bg-surface-container-highest/70 transition-all group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/30 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">lock</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-4">Freshness-Locked Foil</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              Triple laminate moisture barrier protects delicate natural oils from Bengaluru humidity and urban dust until you open the pack.
+            </p>
+</div>
+<!-- Card 5 -->
+<div class="motion-child tilt-card p-6 rounded-xl bg-surface-container-high/60 border border-outline-variant/25 backdrop-blur-md shadow-lg hover:border-primary/50 hover:bg-surface-container-highest/70 transition-all group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/30 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">do_not_disturb_on</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-4">Zero Artificial Additives</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              No saccharin, no chemical brightening agents, and no synthetic perfumes. Real aroma that allows the betel leaf to shine.
+            </p>
+</div>
+<!-- Card 6 -->
+<div class="motion-child tilt-card p-6 rounded-xl bg-surface-container-high/60 border border-outline-variant/25 backdrop-blur-md shadow-lg hover:border-primary/50 hover:bg-surface-container-highest/70 transition-all group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/30 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">sentiment_satisfied</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-4">Repeat Pan Patronage</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              Bengaluru's top paan craftsmen report up to 40% repeat visits from customers who notice the clean, authentic natural aftertaste.
+            </p>
+</div>
+</div>
+<!-- Real-Time Interactive Order Booking Console -->
+<div class="motion-fade-up w-full rounded-xl bg-gradient-to-r from-surface-container-high via-surface-container to-surface-container-high border border-primary/25 backdrop-blur-2xl shadow-2xl p-6 md:p-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-center">
+<div class="lg:col-span-6 space-y-space-md">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary font-label-sm text-label-sm uppercase tracking-wider font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span>
+<span>Direct Wholesale Dispatch</span>
+</div>
+<h3 class="font-headline-lg text-headline-md md:text-headline-lg text-on-surface font-bold leading-tight">
+                Book Your Sirsi Consignment
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Select your requirements below. Daily bulk prices are confirmed personally over one rapid verification call before dispatch.
+              </p>
+<!-- Package Selection Chips -->
+<div class="space-y-2 pt-2">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Select Standard Pack Unit</label>
+<div class="flex flex-wrap gap-3">
+<button class="flex items-center gap-3 px-5 py-3 rounded-full bg-secondary-container border border-primary/40 text-on-surface shadow-md cursor-pointer transition-transform hover:scale-[1.02]" type="button">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<div class="text-left">
+<div class="font-label-md text-label-md font-bold text-primary">500 g Foil Pouch</div>
+<div class="font-label-sm text-[10px] text-on-surface-variant">Standard Retail / Pan Counter Unit</div>
+</div>
+</button>
+<button class="flex items-center gap-3 px-5 py-3 rounded-full bg-surface-container-low border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-all hover:scale-[1.02]" type="button">
+<div class="text-left">
+<div class="font-label-md text-label-md font-semibold">10 kg Master Sack</div>
+<div class="font-label-sm text-[10px] text-outline">B2B Bulk Caterers</div>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Calculator Widget -->
+<div class="lg:col-span-6 flex flex-col space-y-6 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/30 p-6 sm:p-8 shadow-inner">
+<!-- Quantity Incrementer with lively spring reaction -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-outline-variant/20">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Number of 500g Pouches</span>
+<p class="font-body-sm text-[12px] text-outline mt-0.5">Recommended minimum: 5 pouches for free dispatch</p>
+</div>
+<!-- Counter Controls -->
+<div class="flex items-center gap-4 bg-surface-container-high rounded-full p-1.5 shadow-sm border border-outline-variant/30">
+<div class="magnetic-wrap">
+<button aria-label="Decrease quantity" class="w-10 h-10 rounded-full bg-surface-container-highest hover:bg-primary hover:text-on-primary text-on-surface flex items-center justify-center transition-all active:scale-90" onclick="adjustPouches(-1)" type="button">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+</div>
+<span class="font-headline-sm text-headline-sm font-bold text-primary px-3 min-w-[2.5rem] text-center inline-block" id="pouch-count">5</span>
+<div class="magnetic-wrap">
+<button aria-label="Increase quantity" class="w-10 h-10 rounded-full bg-surface-container-highest hover:bg-primary hover:text-on-primary text-on-surface flex items-center justify-center transition-all active:scale-90" onclick="adjustPouches(1)" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Total Weight Calculation Banner -->
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 rounded-lg bg-surface-container border border-outline-variant/20">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase">Consignment Total Net</span>
+<p class="font-headline-sm text-headline-sm font-bold text-on-surface mt-1" id="total-weight-display">2.50 kg</p>
+</div>
+<div class="p-3 rounded-lg bg-surface-container border border-outline-variant/20">
+<span class="font-label-sm text-[11px] text-on-surface-variant uppercase">Estimated Dispatch</span>
+<p class="font-headline-sm text-headline-sm font-bold text-tertiary mt-1">Today &lt; 3 hrs</p>
+</div>
+</div>
+<!-- Price Finalization Pill & Order Button -->
+<div class="space-y-3 pt-2">
+<div class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-high border border-outline-variant/20 text-on-surface font-body-sm text-[13px]">
+<span class="material-symbols-outlined text-primary text-[20px]">phone_in_talk</span>
+<span>Wholesale mandi rate finalised on 60-second confirmation call.</span>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<div class="flex-1 magnetic-wrap w-full">
+<button class="shimmer-btn w-full inline-flex items-center justify-center gap-2 py-4 px-6 rounded-full bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg uppercase tracking-wider font-bold transition-all shadow-xl hover:scale-[1.01] active:scale-95" onclick="initiateBookingModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+<span id="booking-btn-text">Confirm 5 Pouches Booking</span>
+</button>
+</div>
+<div class="magnetic-wrap">
+<a class="inline-flex items-center justify-center gap-2 py-4 px-5 rounded-full bg-tertiary-container hover:bg-tertiary text-on-tertiary font-label-md text-label-md uppercase tracking-wider font-bold transition-all shadow-md" href="https://wa.me/916366745687?text=Hi%20D%20Gold%2C%20I%20want%20to%20order%20Chali%20Cut%20Supari%20in%20Bengaluru" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span>WhatsApp</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Scrollytelling Order Timeline ("Four steps. Zero hassle.") -->
+<section class="relative z-10 w-full px-margin md:px-margin-desktop py-space-2xl bg-surface-container-lowest/70 backdrop-blur-md">
+<div class="max-w-7xl mx-auto space-y-space-2xl">
+<!-- Timeline Header -->
+<div class="text-center max-w-2xl mx-auto space-y-space-xs motion-fade-up">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/50 border border-secondary/30 text-primary font-label-sm text-label-sm uppercase tracking-widest font-semibold animate-float-subtle">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+            How Ordering Works
+          </span>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-on-surface font-bold">
+            Four steps. <span class="text-primary">Zero hassle.</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            No complicated wholesale accounts. No waiting weeks for coastal transit.
+          </p>
+</div>
+<!-- 4-Step Progressive Timeline Cards with Stagger Reveal -->
+<div class="stagger-container relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter pt-4">
+<!-- Step 1 -->
+<div class="motion-child tilt-card relative p-6 sm:p-8 rounded-xl bg-surface-container-high/70 border border-outline-variant/25 backdrop-blur-md shadow-xl flex flex-col justify-between group hover:border-primary/40 hover:bg-surface-container-highest/80 transition-all overflow-hidden">
+<div class="absolute -right-4 -top-6 font-display-hero text-display-hero font-bold text-surface-container-highest/30 select-none group-hover:text-primary/10 transition-colors">
+              1
+            </div>
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary mb-6 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">assignment</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Book Online</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                Pick your pack weight and quantity, share your Bengaluru address and preferred slot. Takes under 60 seconds.
+              </p>
+</div>
+<div class="pt-6 flex items-center gap-2 font-label-sm text-label-sm text-primary font-semibold">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Instant Submission</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="motion-child tilt-card relative p-6 sm:p-8 rounded-xl bg-surface-container-high/70 border border-outline-variant/25 backdrop-blur-md shadow-xl flex flex-col justify-between group hover:border-primary/40 hover:bg-surface-container-highest/80 transition-all overflow-hidden">
+<div class="absolute -right-4 -top-6 font-display-hero text-display-hero font-bold text-surface-container-highest/30 select-none group-hover:text-primary/10 transition-colors">
+              2
+            </div>
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary mb-6 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">call</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">We Call You</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                Our concierge team confirms availability, locks in competitive package rates, and verifies your pan shop delivery window.
+              </p>
+</div>
+<div class="pt-6 flex items-center gap-2 font-label-sm text-label-sm text-primary font-semibold">
+<span class="material-symbols-outlined text-[14px]">support_agent</span>
+<span>1-on-1 Fair Pricing</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="motion-child tilt-card relative p-6 sm:p-8 rounded-xl bg-surface-container-high/70 border border-outline-variant/25 backdrop-blur-md shadow-xl flex flex-col justify-between group hover:border-primary/40 hover:bg-surface-container-highest/80 transition-all overflow-hidden">
+<div class="absolute -right-4 -top-6 font-display-hero text-display-hero font-bold text-surface-container-highest/30 select-none group-hover:text-primary/10 transition-colors">
+              3
+            </div>
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary mb-6 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Fresh Pack Allocation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                Your foil pouches are checked for vacuum integrity, seal freshness, and allocated directly from the newest Sirsi batch.
+              </p>
+</div>
+<div class="pt-6 flex items-center gap-2 font-label-sm text-label-sm text-secondary font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Zero Old Inventory</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="motion-child tilt-card relative p-6 sm:p-8 rounded-xl bg-surface-container-high/70 border border-outline-variant/25 backdrop-blur-md shadow-xl flex flex-col justify-between group hover:border-primary/40 hover:bg-surface-container-highest/80 transition-all overflow-hidden">
+<div class="absolute -right-4 -top-6 font-display-hero text-display-hero font-bold text-surface-container-highest/30 select-none group-hover:text-primary/10 transition-colors">
+              4
+            </div>
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary mb-6 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">local_shipping</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Doorstep Handover</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                Track your rider in real time. Your package arrives straight at your pan shop counter within your allocated Bengaluru time slot.
+              </p>
+</div>
+<div class="pt-6 flex items-center gap-2 font-label-sm text-label-sm text-tertiary font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Inspect Before Pay</span>
+</div>
+</div>
+</div>
+<!-- Action Button below steps -->
+<div class="flex justify-center pt-2 motion-fade-up">
+<div class="magnetic-wrap">
+<a class="shimmer-btn inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg uppercase tracking-wider font-bold transition-all shadow-xl hover:scale-105 active:scale-95" href="#order-calculator">
+<span>Start Your Booking</span>
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_right</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Interactive Bengaluru Pincode & Delivery Validator -->
+<section class="relative z-10 w-full px-margin md:px-margin-desktop py-space-2xl">
+<div class="max-w-7xl mx-auto motion-fade-up">
+<div class="rounded-xl bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-low border border-primary/20 backdrop-blur-xl p-8 md:p-12 shadow-2xl">
+<div class="max-w-3xl mx-auto text-center space-y-space-md">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/60 border border-secondary/30 text-secondary font-label-sm text-label-sm uppercase tracking-widest font-semibold animate-float-subtle">
+<span class="material-symbols-outlined text-[16px]">pin_drop</span>
+<span>Hyperlocal Logistics</span>
+</div>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-on-surface font-bold">
+              One city, done right. <span class="text-primary">Bengaluru Only.</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Check your delivery slot and serviceability instantly. We deliver across East, West, South, North, and Central Bengaluru.
+            </p>
+<!-- Interactive Pincode Search Bar -->
+<div class="relative max-w-xl mx-auto pt-2">
+<div class="flex flex-col sm:flex-row items-center gap-2 p-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 shadow-xl focus-within:border-primary/50 transition-colors">
+<div class="flex items-center gap-3 pl-4 flex-1 w-full">
+<span class="material-symbols-outlined text-primary text-[20px]">search</span>
+<input class="w-full bg-transparent border-0 outline-none text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md" id="pincode-input" maxlength="6" onkeyup="checkPincodeInstant(this.value)" placeholder="Enter 6-digit Pincode (e.g. 560041)" type="text"/>
+</div>
+<div class="w-full sm:w-auto magnetic-wrap">
+<button class="shimmer-btn w-full sm:w-auto px-7 py-3 rounded-full bg-primary hover:bg-primary-fixed text-on-primary font-label-sm text-label-sm uppercase tracking-wider font-bold transition-all shadow-md active:scale-95 shrink-0" onclick="validatePincodeBtn()" type="button">
+                    Check Slot
+                  </button>
+</div>
+</div>
+<!-- Result Pill Banner with Spring Entrance -->
+<div class="hidden mt-4 p-4 rounded-xl bg-surface-container-highest/90 border border-primary/30 text-left transition-all shadow-lg" id="pincode-result">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" id="pincode-status-icon">check_circle</span>
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface" id="pincode-status-text">Serviceable Area!</span>
+</div>
+<span class="font-label-sm text-[11px] text-primary bg-primary/10 border border-primary/30 px-2.5 py-0.5 rounded-full" id="pincode-slot-tag">Next Slot: 10 AM – 1 PM</span>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant mt-1.5" id="pincode-hub-detail">
+                  Dispatched from our South Bengaluru Central Hub. Dedicated temperature-controlled express van delivery.
+                </p>
+</div>
+</div>
+<!-- Quick Selector Area Chips -->
+<div class="pt-4 space-y-2">
+<span class="font-label-sm text-[11px] uppercase tracking-wider text-on-surface-variant">Popular Delivery Zones:</span>
+<div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560041', 'Jayanagar')" type="button">Jayanagar (560041)</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560034', 'Koramangala')" type="button">Koramangala (560034)</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560003', 'Malleshwaram')" type="button">Malleshwaram (560003)</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560010', 'Rajajinagar')" type="button">Rajajinagar (560010)</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560066', 'Whitefield')" type="button">Whitefield (560066)</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560038', 'Indiranagar')" type="button">Indiranagar (560038)</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-highest/70 hover:bg-primary hover:text-on-primary text-on-surface-variant font-label-sm text-[11px] transition-all hover:scale-105" onclick="selectAreaPin('560102', 'HSR Layout')" type="button">HSR Layout (560102)</button>
+</div>
+</div>
+<!-- Dispatch Slot Windows Schedule Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-outline-variant/20">
+<div class="p-3 rounded-lg bg-surface-container-lowest/60 border border-outline-variant/20 text-center tilt-card">
+<span class="font-label-sm text-[10px] text-primary uppercase font-bold">Morning Batch</span>
+<p class="font-body-md text-body-md font-bold text-on-surface mt-0.5">10:00 AM – 1:00 PM</p>
+<span class="font-label-sm text-[10px] text-tertiary">Fresh for noon paan rolling</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-lowest/60 border border-outline-variant/20 text-center tilt-card">
+<span class="font-label-sm text-[10px] text-primary uppercase font-bold">Afternoon Window</span>
+<p class="font-body-md text-body-md font-bold text-on-surface mt-0.5">1:00 PM – 4:00 PM</p>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Suburban express route</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-lowest/60 border border-outline-variant/20 text-center tilt-card">
+<span class="font-label-sm text-[10px] text-primary uppercase font-bold">Evening Peak</span>
+<p class="font-body-md text-body-md font-bold text-on-surface mt-0.5">4:00 PM – 8:00 PM</p>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Night rush restocking</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Quick-Order Modal Dialog -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-container-lowest/80 backdrop-blur-xl hidden" id="booking-modal">
+<div class="relative w-full max-w-lg rounded-xl bg-surface-container-high border border-primary/30 p-6 sm:p-8 shadow-2xl space-y-5">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Bengaluru Express Dispatch</h3>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface hover:text-primary flex items-center justify-center transition-colors" onclick="closeBookingModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Please share your pan shop name &amp; area. We will call in 15 minutes to confirm current mandi batch rate and deliver today.
+        </p>
+<form class="space-y-4" id="order-form" onsubmit="handleOrderSubmit(event)">
+<div>
+<label class="block font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-1">Pan Shop / Business Name</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-on-surface-variant/50 border border-outline-variant/30 outline-none focus:ring-1 focus:ring-primary font-body-sm text-body-sm" placeholder="e.g. Royal Paan Mandir" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-1">Contact Phone</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-on-surface-variant/50 border border-outline-variant/30 outline-none focus:ring-1 focus:ring-primary font-body-sm text-body-sm" placeholder="+91 98765 43210" required="" type="tel"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-1">Quantity (500g Packs)</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-on-surface-variant/50 border border-outline-variant/30 outline-none focus:ring-1 focus:ring-primary font-body-sm text-body-sm" id="modal-qty-input" min="1" type="number" value="5"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-1">Delivery Address / Landmark</label>
+<textarea class="w-full px-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-on-surface-variant/50 border border-outline-variant/30 outline-none focus:ring-1 focus:ring-primary font-body-sm text-body-sm" placeholder="Street, Pan Shop No, Area &amp; Landmark (e.g. near Metro Station)" required="" rows="2"></textarea>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/20 flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant uppercase">Payment Method</span>
+<span class="text-tertiary font-bold">UPI / Cash on Delivery Counter Handover</span>
+</div>
+<button class="shimmer-btn w-full py-4 rounded-full bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg uppercase tracking-wider font-bold transition-all shadow-xl active:scale-95" type="submit">
+            Submit Dispatch Request
+          </button>
+</form>
+</div>
+</div>
+<!-- Floating Sticky Action Pills with Pulse Ring -->
+<div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+<!-- Back to top pill -->
+<div class="magnetic-wrap">
+<button aria-label="Back to top" class="w-12 h-12 rounded-full bg-surface-container-high/90 border border-primary/30 backdrop-blur-md shadow-xl text-primary hover:bg-primary hover:text-on-primary flex items-center justify-center transition-all group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" type="button">
+<span class="material-symbols-outlined text-[20px] group-hover:-translate-y-0.5 transition-transform">arrow_upward</span>
+</button>
+</div>
+<!-- Floating WhatsApp Action with Pulse Ring -->
+<div class="magnetic-wrap">
+<a aria-label="Chat with Concierge on WhatsApp" class="relative w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all" href="https://wa.me/916366745687?text=Hello%20D%20Gold%20Supari%20Team%2C%20I%20am%20interested%20in%20ordering%20Chali%20Cut%20Supari" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[28px]">chat</span>
+<span class="absolute inset-0 rounded-full border-2 border-[#25D366] animate-ping opacity-75 pointer-events-none"></span>
+<span class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-primary border-2 border-surface animate-pulse"></span>
+</a>
+</div>
+</div>
+</div>
+<!-- Interactive Script: Observers, Spring Physics, Magnetic Cursor -->
+<script>
+    let pouchCount = 5;
+
+    function adjustPouches(delta) {
+      pouchCount = Math.max(1, pouchCount + delta);
+      const countEl = document.getElementById('pouch-count');
+      countEl.innerText = pouchCount;
+      
+      // Trigger Spring Reaction
+      countEl.classList.remove('spring-bump');
+      void countEl.offsetWidth; // Reflow
+      countEl.classList.add('spring-bump');
+
+      // Update Net weight display
+      const totalKg = (pouchCount * 0.5).toFixed(2);
+      document.getElementById('total-weight-display').innerText = totalKg + ' kg';
+      document.getElementById('booking-btn-text').innerText = 'Confirm ' + pouchCount + ' Pouches Booking';
+      const modalInput = document.getElementById('modal-qty-input');
+      if (modalInput) modalInput.value = pouchCount;
+    }
+
+    function showHotspotTip(title, desc) {
+      const popup = document.getElementById('hotspot-popup');
+      document.getElementById('hotspot-title').innerText = title;
+      document.getElementById('hotspot-desc').innerText = desc;
+      popup.classList.remove('hidden');
+    }
+
+    function switchTransparencyTab(tab) {
+      const specsEl = document.getElementById('tab-specs');
+      const labEl = document.getElementById('tab-lab');
+      const btnSpecs = document.getElementById('btn-specs');
+      const btnLab = document.getElementById('btn-lab');
+
+      if (tab === 'specs') {
+        specsEl.classList.remove('hidden');
+        labEl.classList.add('hidden');
+        btnSpecs.className = 'px-4 py-1.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-semibold bg-primary text-on-primary transition-all magnetic-wrap';
+        btnLab.className = 'px-4 py-1.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-semibold text-on-surface-variant hover:text-on-surface transition-all magnetic-wrap';
+      } else {
+        specsEl.classList.add('hidden');
+        labEl.classList.remove('hidden');
+        btnLab.className = 'px-4 py-1.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-semibold bg-primary text-on-primary transition-all magnetic-wrap';
+        btnSpecs.className = 'px-4 py-1.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-semibold text-on-surface-variant hover:text-on-surface transition-all magnetic-wrap';
+      }
+    }
+
+    function checkPincodeInstant(val) {
+      if (val && val.length === 6) {
+        validatePincodeBtn();
+      }
+    }
+
+    function selectAreaPin(pin, name) {
+      const input = document.getElementById('pincode-input');
+      input.value = pin;
+      validatePincodeBtn(name);
+    }
+
+    function validatePincodeBtn(customName) {
+      const input = document.getElementById('pincode-input');
+      const resultBox = document.getElementById('pincode-result');
+      const statusText = document.getElementById('pincode-status-text');
+      const pin = input.value.trim();
+
+      if (!pin) {
+        alert('Please enter a Bengaluru postal code.');
+        return;
+      }
+
+      resultBox.classList.remove('hidden');
+      resultBox.classList.remove('spring-bump');
+      void resultBox.offsetWidth;
+      resultBox.classList.add('spring-bump');
+
+      if (pin.startsWith('560')) {
+        statusText.innerText = (customName ? customName + ' (' + pin + ')' : 'Pincode ' + pin) + ' - Priority Bengaluru Delivery Active!';
+        document.getElementById('pincode-status-icon').innerText = 'check_circle';
+        document.getElementById('pincode-status-icon').className = 'material-symbols-outlined text-tertiary';
+        document.getElementById('pincode-slot-tag').innerText = 'Next Slot: 10 AM – 1 PM';
+      } else {
+        statusText.innerText = 'Service Limited: Bengaluru urban zone only.';
+        document.getElementById('pincode-status-icon').innerText = 'info';
+        document.getElementById('pincode-status-icon').className = 'material-symbols-outlined text-primary';
+        document.getElementById('pincode-slot-tag').innerText = 'Call Support for Regional Dispatch';
+      }
+    }
+
+    function initiateBookingModal() {
+      const modal = document.getElementById('booking-modal');
+      modal.classList.remove('hidden');
+      document.getElementById('modal-qty-input').value = pouchCount;
+    }
+
+    function closeBookingModal() {
+      document.getElementById('booking-modal').classList.add('hidden');
+    }
+
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      alert('Thank you! Your D GOLD Sirsi Chali Cut reservation has been placed. Our Bangalore delivery coordinator is reviewing current dispatch route and will call your number within 15 minutes.');
+      closeBookingModal();
+    }
+
+    // Scroll In-View Observer (Framer Motion whileInView emulation)
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -80px 0px',
+        threshold: 0.12
+      };
+
+      const inViewObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.motion-fade-up, .stagger-container').forEach(el => {
+        inViewObserver.observe(el);
+      });
+
+      // 3D Card Interactive Tilt with Spring Damping
+      const tiltCards = document.querySelectorAll('.tilt-card, #pouch-3d-card');
+      tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          const rotX = -(y / rect.height) * 12;
+          const rotY = (x / rect.width) * 12;
+          card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(6px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        });
+      });
+
+      // Framer-Motion style Magnetic Cursor on Interactive Pills/Buttons
+      const magnets = document.querySelectorAll('.magnetic-wrap');
+      magnets.forEach(wrap => {
+        wrap.addEventListener('mousemove', (e) => {
+          const rect = wrap.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          wrap.style.transform = `translate(${x * 0.28}px, ${y * 0.28}px)`;
+        });
+        wrap.addEventListener('mouseleave', () => {
+          wrap.style.transform = 'translate(0px, 0px)';
+        });
+      });
+    });
+  </script>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20 pt-space-2xl pb-space-xl">
+<div class="max-w-7xl mx-auto px-margin md:px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-xl pb-space-2xl border-b border-outline-variant/15">
+<div class="md:col-span-1">
+<div class="flex items-center gap-3 mb-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">crown</span>
+</div>
+<span class="font-headline-md text-headline-sm text-primary font-bold">D Gold</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-space-md">
+          Finest Sirsi Chali cut arecanut processed with agrarian lineage and royal purity for luxury connoisseurs.
+        </p>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/40 border border-secondary/30 font-label-sm text-label-sm text-secondary animate-float-subtle">
+<span class="material-symbols-outlined text-[14px]">verified</span>Certified Pure Heritage
+        </div>
+</div>
+<div class="space-y-space-sm">
+<h4 class="font-label-lg text-label-lg uppercase tracking-wider text-primary">Selections</h4>
+<ul class="space-y-2 font-body-sm text-body-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" data-path="product" href="#">Royal Diamond Cut</a></li>
+<li><a class="hover:text-primary transition-colors" data-path="product" href="#">Classic Sirsi Pouch 500g</a></li>
+<li><a class="hover:text-primary transition-colors" data-path="product" href="#">Institutional Master Packs</a></li>
+<li><a class="hover:text-primary transition-colors" data-path="product" href="#">Purity Certification</a></li>
+</ul>
+</div>
+<div class="space-y-space-sm">
+<h4 class="font-label-lg text-label-lg uppercase tracking-wider text-primary">Concierge</h4>
+<ul class="space-y-2 font-body-sm text-body-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" data-path="delivery" href="#">Bengaluru Priority Dispatch</a></li>
+<li><a class="hover:text-primary transition-colors" data-path="track-order" href="#">Track Live Consignment</a></li>
+<li><a class="hover:text-primary transition-colors" data-path="faq" href="#">Storage &amp; Freshness</a></li>
+<li><a class="hover:text-primary transition-colors" data-path="contact" href="#">Wholesale &amp; Export Inquiry</a></li>
+</ul>
+</div>
+<div class="space-y-space-sm">
+<h4 class="font-label-lg text-label-lg uppercase tracking-wider text-primary">Direct Order</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Immediate dispatch coordination across Bengaluru central and suburbs.</p>
+<div class="flex flex-col gap-2 pt-2">
+<a class="font-label-md text-label-md text-on-surface hover:text-primary transition-colors flex items-center gap-2" href="tel:+916366745687">
+<span class="material-symbols-outlined text-[16px] text-primary">call</span>+91 6366745687
+          </a>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary">schedule</span>Daily 8:00 AM – 10:00 PM IST
+          </span>
+</div>
+</div>
+</div>
+<div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 D GOLD Supari. All rights reserved. Sirsi Heritage Agro.</p>
+<div class="flex items-center gap-space-lg">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-policy" href="#">Privacy Charter</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="terms-of-service" href="#">Terms of Pure Supply</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
