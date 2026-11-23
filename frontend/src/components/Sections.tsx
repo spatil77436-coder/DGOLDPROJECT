@@ -70,7 +70,7 @@ export function About() {
 /* ------------------------------- WHY ------------------------------- */
 
 const WHY = [
-  { icon: Factory, title: "Direct From Our Unit", text: "Your stock ships straight from the D GOLD packing unit to your shop. No wholesale layers, no repacking, no tampering." },
+  { icon: Factory, title: "Direct From Our Unit", text: "Your stock ships straight from the D GOLD packing unit to your shop. no repacking, no tampering." },
   { icon: Ban, title: "No Middlemen, No Retail Shop", text: "We deliberately run without outlets or distributors — so quality control and accountability stay with us alone." },
   { icon: MapPin, title: "Bengaluru-Only Focus", text: "We serve one city and serve it properly. Short routes mean fresher stock and dependable delivery windows." },
   { icon: Timer, title: "Freshness You Can Verify", text: "Batch details, packing date and best-before are printed on every 500g pouch. Check it yourself, every time." },

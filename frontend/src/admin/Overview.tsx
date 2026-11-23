@@ -109,7 +109,7 @@ export default function Overview({
     { label: "In Progress", value: String(stats.confirmed), icon: CheckCircle2, tone: "from-sky-400 to-blue-600" },
     { label: "Delivered", value: String(stats.delivered), icon: PackageCheck, tone: "from-emerald-400 to-teal-600" },
     { label: "Customers", value: String(stats.customers), icon: Users, tone: "from-violet-400 to-purple-600" },
-    { label: "Revenue (Delivered)", value: inr(stats.revenue), icon: IndianRupee, tone: "from-gold-400 to-gold-600", sub: stats.unpriced > 0 ? `+${stats.unpriced} on-call order${stats.unpriced > 1 ? "s" : ""} not counted` : undefined },
+   
   ];
 
   return (
@@ -144,7 +144,7 @@ export default function Overview({
             </div>
             <div className="font-display text-xl font-bold text-white truncate">{c.value}</div>
             <div className="text-[10px] uppercase tracking-[0.14em] text-emerald-100/50 font-bold mt-1">{c.label}</div>
-            {c.sub && <div className="text-[10px] text-amber-300/80 mt-1">{c.sub}</div>}
+            {/* {c.sub && <div className="text-[10px] text-amber-300/80 mt-1">{c.sub}</div>}  */}
           </motion.div>
         ))}
       </div>
