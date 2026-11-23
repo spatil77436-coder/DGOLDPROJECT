@@ -9,18 +9,87 @@ export function Reveal({
   delay = 0,
   className,
   y = 26,
+  direction = "up",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
   y?: number;
+  direction?: "up" | "down" | "left" | "right" | "none";
+}) {
+  const initialOffset = {
+    up: { y, x: 0 },
+    down: { y: -y, x: 0 },
+    left: { x: y, y: 0 },
+    right: { x: -y, y: 0 },
+    none: { x: 0, y: 0 },
+  }[direction];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, ...initialOffset }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function StaggerContainer({
+  children,
+  className,
+  staggerDelay = 0.08,
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  staggerDelay?: number;
+  delay?: number;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: staggerDelay,
+            delayChildren: delay,
+          },
+        },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function StaggerItem({
+  children,
+  className,
+  y = 24,
+}: {
+  children: ReactNode;
+  className?: string;
+  y?: number;
+}) {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
       className={className}
     >
       {children}
@@ -97,8 +166,10 @@ export function QtyStepper({
         dark ? "border-emerald-300/20 bg-emerald-950/50" : "border-emerald-900/15 bg-white"
       )}
     >
-      <button
+      <motion.button
         type="button"
+        whileTap={{ scale: 0.85 }}
+        whileHover={{ scale: 1.05 }}
         onClick={() => onChange(Math.max(min, value - 1))}
         disabled={value <= min}
         className={cn(
@@ -108,7 +179,7 @@ export function QtyStepper({
         aria-label="Decrease quantity"
       >
         <Minus className="w-4 h-4" />
-      </button>
+      </motion.button>
       <input
         type="number"
         value={value}
@@ -124,8 +195,10 @@ export function QtyStepper({
         )}
         aria-label="Quantity"
       />
-      <button
+      <motion.button
         type="button"
+        whileTap={{ scale: 0.85 }}
+        whileHover={{ scale: 1.05 }}
         onClick={() => onChange(Math.min(max, value + 1))}
         disabled={value >= max}
         className={cn(
@@ -135,7 +208,7 @@ export function QtyStepper({
         aria-label="Increase quantity"
       >
         <Plus className="w-4 h-4" />
-      </button>
+      </motion.button>
     </div>
   );
 }

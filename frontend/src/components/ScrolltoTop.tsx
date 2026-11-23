@@ -1,5 +1,6 @@
-import {useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowUp } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 const ScrolltoTop = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -9,7 +10,7 @@ const ScrolltoTop = () => {
             setIsVisible(window.scrollY > 400);
         };
 
-        window.addEventListener("scroll", handlescroll);
+        window.addEventListener("scroll", handlescroll, { passive: true });
 
         return () => {
             window.removeEventListener("scroll", handlescroll);
@@ -25,28 +26,23 @@ const ScrolltoTop = () => {
     }
 
   return (
-    <button
-      onClick={scrollToTop}
-      aria-label="Scroll to top"
-      className={`
-        fixed bottom-24 right-6 z-[100]
-        flex items-center justify-center
-        h-12 w-12 rounded-full
-        bg-[#D9A52E] text-[#06432F]
-        shadow-lg
-        hover:bg-[#F2C75C]
-        cursor-pointer
-        hover:-translate-y-1
-        transition-all duration-300
-        ${
-          isVisible
-            ? "opacity-100 visible"
-            : "opacity-0 invisible pointer-events-none"
-        }
-      `}
-    >
-      <ArrowUp size={23} strokeWidth={2.5} />
-    </button>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          whileHover={{ scale: 1.1, y: -3 }}
+          whileTap={{ scale: 0.92 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+          className="fixed bottom-24 right-6 z-[100] flex items-center justify-center h-12 w-12 rounded-full bg-[#D9A52E] text-[#06432F] shadow-lg hover:bg-[#F2C75C] cursor-pointer transition-colors"
+        >
+          <ArrowUp size={23} strokeWidth={2.5} />
+        </motion.button>
+      )}
+    </AnimatePresence>
   )
 }
 

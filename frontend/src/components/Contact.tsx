@@ -56,10 +56,11 @@ export default function Contact() {
               <motion.a
                 href={c.href}
                 {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                whileHover={{ y: -6 }}
-                className="block h-full rounded-3xl glass border-emerald-300/10 hover:border-gold-400/40 p-7 text-center transition-colors"
+                whileHover={{ y: -8, scale: 1.015 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="group block h-full rounded-3xl glass border-emerald-300/10 hover:border-gold-400/40 p-7 text-center transition-colors hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
               >
-                <div className={`w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br ${c.accent} flex items-center justify-center shadow-lg`}>
+                <div className={`w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br ${c.accent} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}>
                   <c.icon className="w-6 h-6 text-white" />
                 </div>
                 <p className="mt-4 text-[11px] uppercase tracking-[0.24em] text-gold-300/80 font-bold">{c.label}</p>
@@ -71,7 +72,11 @@ export default function Contact() {
         </div>
 
         <Reveal delay={0.15}>
-          <div className="mt-8 rounded-3xl glass border-gold-400/25 p-7 sm:p-9 grid md:grid-cols-3 gap-6">
+          <motion.div
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 rounded-3xl glass border-gold-400/25 p-7 sm:p-9 grid md:grid-cols-3 gap-6"
+          >
             <div className="flex items-start gap-3.5">
               <MapPin className="w-5 h-5 text-gold-400 flex-shrink-0 mt-1" />
               <div>
@@ -95,14 +100,19 @@ export default function Contact() {
                 <p className="mt-1.5 text-sm text-emerald-100/80 leading-relaxed">{settings.slots.join(" · ")}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         </Reveal>
 
         <Reveal delay={0.2} className="mt-12 text-center">
-          <button onClick={() => openBooking()} className="btn-gold px-10 py-[18px] text-lg group">
+          <motion.button
+            whileHover={{ scale: 1.03, y: -2, boxShadow: "0 14px 30px -6px rgba(244, 210, 122, 0.45)" }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => openBooking()}
+            className="btn-gold px-10 py-[18px] text-lg group"
+          >
             Book Your First Order
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+          </motion.button>
           <p className="mt-3 text-xs text-emerald-100/50">Free to book · Price confirmed on call · Bengaluru only</p>
         </Reveal>
       </div>

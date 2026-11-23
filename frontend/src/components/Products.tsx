@@ -27,15 +27,24 @@ function ProductCard({ product }: { product: Product }) {
     <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
       {/* Visual */}
       <Reveal className="relative">
-        <div className="relative rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_30%,#12523c,#06301f_75%)] border border-gold-400/20 px-8 py-12 sm:px-14 overflow-hidden">
+        <motion.div
+          whileHover={{ y: -4, scale: 1.01 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="relative rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_30%,#12523c,#06301f_75%)] border border-gold-400/20 px-8 py-12 sm:px-14 overflow-hidden shadow-2xl"
+        >
           <div className="absolute inset-0 dot-pattern opacity-20" />
-          <div className="absolute top-5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-gradient-gold text-emerald-950 text-[10px] sm:text-[11px] font-extrabold tracking-[0.22em] uppercase shadow-gold whitespace-nowrap">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="absolute top-5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-gradient-gold text-emerald-950 text-[10px] sm:text-[11px] font-extrabold tracking-[0.22em] uppercase shadow-gold whitespace-nowrap"
+          >
             Premium Chali Cut Supari
-          </div>
+          </motion.div>
           <div className="relative mx-auto max-w-[280px] sm:max-w-[320px] mt-6">
             <ProductPack image={product.image ?? DEFAULT_PRODUCT_IMAGE} float={false} />
           </div>
-        </div>
+        </motion.div>
       </Reveal>
 
       {/* Details */}
@@ -46,12 +55,17 @@ function ProductCard({ product }: { product: Product }) {
 
         <ul className="mt-5 grid sm:grid-cols-2 gap-2.5">
           {product.highlights.map((h) => (
-            <li key={h} className="flex items-center gap-2 text-sm font-medium text-emerald-900/80">
+            <motion.li
+              key={h}
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2 text-sm font-medium text-emerald-900/80 cursor-default"
+            >
               <span className="w-5 h-5 rounded-full bg-emerald-700/10 border border-emerald-700/25 flex items-center justify-center flex-shrink-0">
                 <Check className="w-3 h-3 text-emerald-700" strokeWidth={3} />
               </span>
               {h}
-            </li>
+            </motion.li>
           ))}
         </ul>
 
@@ -68,11 +82,14 @@ function ProductCard({ product }: { product: Product }) {
                 const out = packSoldOut(p);
                 const selected = p.id === pack?.id;
                 return (
-                  <button
+                  <motion.button
                     key={p.id}
                     role="radio"
                     aria-checked={selected}
                     disabled={out}
+                    whileHover={out ? undefined : { scale: 1.03, y: -2 }}
+                    whileTap={out ? undefined : { scale: 0.97 }}
+                    transition={{ duration: 0.2 }}
                     onClick={() => {
                       setPackId(p.id);
                       setQty(1);
@@ -93,11 +110,16 @@ function ProductCard({ product }: { product: Product }) {
                       {out ? "Out of stock" : p.price != null ? inr(p.price) : "Price on call"}
                     </span>
                     {selected && !out && (
-                      <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gradient-gold flex items-center justify-center">
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 450, damping: 24 }}
+                        className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gradient-gold flex items-center justify-center shadow-md"
+                      >
                         <Check className="w-3 h-3 text-emerald-950" strokeWidth={3.5} />
-                      </span>
+                      </motion.span>
                     )}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -133,27 +155,34 @@ function ProductCard({ product }: { product: Product }) {
               <div className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-emerald-900/5 border border-emerald-900/15 text-emerald-900/70 font-semibold">
                 <PackageX className="w-5 h-5" /> Currently unavailable
               </div>
-              <a href={`tel:+91${settings.phone}`} className="btn-gold px-7 py-4">
+              <motion.a
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                href={`tel:+91${settings.phone}`}
+                className="btn-gold px-7 py-4"
+              >
                 <Phone className="w-4 h-4" /> Call for availability
-              </a>
+              </motion.a>
             </>
           ) : (
             <>
               <motion.button
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.03, y: -2, boxShadow: "0 12px 28px -6px rgba(244, 210, 122, 0.45)" }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => openBooking({ productId: product.id, packId: pack?.id })}
                 className="btn-gold px-8 py-4 text-base group"
               >
                 Book This Pack
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
               </motion.button>
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 href={`tel:+91${settings.phone}`}
                 className="px-7 py-4 rounded-2xl border border-emerald-900/15 text-emerald-900 font-semibold text-center hover:border-gold-500/60 hover:bg-white transition-colors inline-flex items-center justify-center gap-2"
               >
                 <Phone className="w-4 h-4 text-gold-600" /> +91 {settings.phone}
-              </a>
+              </motion.a>
             </>
           )}
         </div>

@@ -61,12 +61,13 @@ export default function Features() {
           {FEATURES.map((f, i) => (
             <Reveal key={f.title} delay={i * 0.07}>
               <motion.div
-                whileHover={{ y: -6 }}
-                className="group relative h-full rounded-3xl glass border-emerald-300/10 hover:border-gold-400/40 p-7 overflow-hidden transition-colors duration-300"
+                whileHover={{ y: -8, scale: 1.015 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative h-full rounded-3xl glass border-emerald-300/10 hover:border-gold-400/40 p-7 overflow-hidden transition-colors duration-300 hover:shadow-[0_24px_50px_-15px_rgba(0,0,0,0.5)] cursor-default"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-gold-400/0 to-emerald-600/0 group-hover:from-gold-400/8 group-hover:to-emerald-600/8 transition-all duration-500" />
                 <div className="relative">
-                  <div className={`inline-flex w-[52px] h-[52px] items-center justify-center rounded-2xl bg-gradient-to-br ${f.tone} shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform`}>
+                  <div className={`inline-flex w-[52px] h-[52px] items-center justify-center rounded-2xl bg-gradient-to-br ${f.tone} shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}>
                     <f.icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="mt-5 font-display text-xl font-bold text-white">{f.title}</h3>

@@ -65,8 +65,9 @@ export default function ProductPack({
       <div className="absolute -inset-10 rounded-full bg-[radial-gradient(circle_at_50%_35%,rgba(244,210,122,0.22),rgba(10,61,46,0.0)_65%)] pointer-events-none" />
       <div ref={ref} className="relative w-full" style={{ aspectRatio: "340 / 470" }}>
         <motion.div
-          animate={float ? { y: [0, -10, 0] } : undefined}
+          animate={float ? { y: [0, -10, 0], rotate: [0, 0.6, 0, -0.6, 0] } : undefined}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
           className="absolute left-0 top-0 origin-top-left"
           style={{ width: 340, height: 470, transform: `scale(${scale})` }}
         >

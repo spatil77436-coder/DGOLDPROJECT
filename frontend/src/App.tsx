@@ -26,12 +26,14 @@ function WhatsAppFloat() {
     <motion.a
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
+      whileHover={{ scale: 1.14, y: -2 }}
+      whileTap={{ scale: 0.92 }}
       transition={{ delay: 1.2, type: "spring", stiffness: 200, damping: 15 }}
       href={waLink(settings.whatsapp, "Hello D GOLD! I'd like to enquire about Premium Chali Cut Supari (Bengaluru delivery).")}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with D GOLD on WhatsApp"
-      className="fixed bottom-5 right-5 z-[90] w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-2xl wa-pulse hover:scale-110 transition-transform"
+      className="fixed bottom-5 right-5 z-[90] w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-2xl wa-pulse transition-shadow"
     >
       <MessageCircle className="w-7 h-7 text-white" />
     </motion.a>
