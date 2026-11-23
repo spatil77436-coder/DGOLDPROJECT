@@ -5,9 +5,8 @@ import { env } from "./env.js";
 const cleanUrl = (url) => (url ? url.trim().replace(/\/$/, "") : "");
 
 const allowedOrigins = [
-  cleanUrl(env.FRONTEND_URL),
   "http://localhost:5173",
-   https://dgoldproject-c46uiwipq-sagarrohit.vercel.app/
+  "https://dgoldproject-c46uiwipq-sagarrohit.vercel.app"  // ✅ quoted, no trailing slash
 ].filter(Boolean);
 
 export const corsMiddleware = cors({
