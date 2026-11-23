@@ -1,7 +1,7 @@
 
 const API_URL =
   (import.meta as ImportMeta & { env: { VITE_API_URL?: string } }).env
-    .VITE_API_URL || "http://localhost:5000/api/v1";
+    .VITE_API_URL || "https://dgoldproject-hxco.onrender.com/api/v1";
 
 interface ApiError {
   message?: string;

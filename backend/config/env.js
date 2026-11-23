@@ -4,7 +4,7 @@ import { z } from "zod";
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().int().positive().default(5000),
-  FRONTEND_URL: z.string().url().default("http://localhost:5173"),
+  FRONTEND_URL: z.string().url().default("http://localhost:5173,"),
   DATABASE_URL: z.string().min(1),
   DIRECT_URL: z.string().optional(),
   JWT_ACCESS_SECRET: z.string().min(32),
