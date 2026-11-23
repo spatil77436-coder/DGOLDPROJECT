@@ -1,4 +1,4 @@
-import { apiRequest } from "./api";
+import { apiRequest, getStoredToken, setStoredToken } from "./api";
 
 export type OrderStatus =
   | "pending"
@@ -301,10 +301,13 @@ export const db = {
   },
   async verifyAdmin(email: string, password: string): Promise<boolean> {
     try {
-      await apiRequest("/auth/login", {
+      const res = await apiRequest<{ admin: AdminRecord; accessToken?: string }>("/auth/login", {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
+      if (res?.accessToken) {
+        setStoredToken(res.accessToken);
+      }
       return true;
     } catch {
       return false;
@@ -330,10 +333,11 @@ export function startSession() {
   sessionStorage.setItem(SESSION_KEY, "active");
 }
 export function hasSession(): boolean {
-  return sessionStorage.getItem(SESSION_KEY) === "active";
+  return sessionStorage.getItem(SESSION_KEY) === "active" && !!getStoredToken();
 }
 export function endSession() {
   sessionStorage.removeItem(SESSION_KEY);
+  setStoredToken(null);
   void apiRequest("/auth/logout", { method: "POST" }).catch(() => undefined);
 }
 
