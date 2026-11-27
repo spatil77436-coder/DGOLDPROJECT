@@ -57,16 +57,20 @@ export default function FAQ() {
         <div className="space-y-3">
           {faqs.map((f, i) => (
             <Reveal key={i} delay={Math.min(i * 0.04, 0.3)}>
-              <div className={`rounded-2xl border overflow-hidden transition-all duration-300 bg-white ${open === i ? "border-gold-500/60 shadow-[0_16px_40px_-18px_rgba(184,137,43,0.4)]" : "border-emerald-900/10 hover:border-emerald-900/25"}`}>
+              <motion.div
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+                className={`rounded-2xl border overflow-hidden transition-colors duration-300 bg-white ${open === i ? "border-gold-500/60 shadow-[0_16px_40px_-18px_rgba(184,137,43,0.4)]" : "border-emerald-900/10 hover:border-emerald-900/25"}`}
+              >
                 <button
                   onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 p-5 text-left"
+                  className="w-full flex items-center justify-between gap-4 p-5 text-left cursor-pointer"
                   aria-expanded={open === i}
                 >
                   <span className="font-display text-lg font-bold">{f.q}</span>
                   <motion.span
                     animate={{ rotate: open === i ? 45 : 0 }}
-                    transition={{ duration: 0.25 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className={`flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${open === i ? "bg-gradient-gold text-emerald-950" : "bg-emerald-900/5 text-emerald-800"}`}
                   >
                     <Plus className="w-5 h-5" />
@@ -78,14 +82,14 @@ export default function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28 }}
+                      transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
                       <p className="px-5 pb-5 text-emerald-900/70 leading-relaxed text-[15px]">{f.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             </Reveal>
           ))}
         </div>

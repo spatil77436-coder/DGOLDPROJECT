@@ -67,43 +67,49 @@ export default function Navbar() {
 
           <nav className="hidden lg:flex items-center gap-0.5" aria-label="Primary">
             {LINKS.map((l) => (
-              <a
+              <motion.a
                 key={l.href}
                 href={l.href}
+                whileHover={{ y: -1 }}
                 className={cn(
                   "relative px-3.5 py-2 text-sm font-medium transition-colors rounded-lg",
                   active === l.href ? "text-gold-300" : "text-emerald-100/75 hover:text-white"
                 )}
               >
                 {l.label}
-                <span
-                  className={cn(
-                    "absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] rounded-full bg-gold-400 transition-all duration-300",
-                    active === l.href ? "w-4 opacity-100" : "w-0 opacity-0"
-                  )}
-                />
-              </a>
+                {active === l.href ? (
+                  <motion.span
+                    layoutId="activeNav"
+                    className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] w-4 rounded-full bg-gold-400"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                ) : null}
+              </motion.a>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-2">
-            <a
+            <motion.a
               href={`tel:+91${settings.phone}`}
+              whileHover={{ scale: 1.1, rotate: 6 }}
+              whileTap={{ scale: 0.94 }}
               className="p-2.5 rounded-xl text-emerald-100/80 hover:text-gold-300 hover:bg-white/5 transition-colors"
               aria-label={`Call +91 ${settings.phone}`}
             >
               <Phone className="w-[18px] h-[18px]" />
-            </a>
-            <button
+            </motion.a>
+            <motion.button
               onClick={() => setTrackOpen(true)}
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.97 }}
               className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-emerald-100/85 border border-emerald-300/20 hover:border-gold-400/40 hover:text-white transition-colors"
             >
               <PackageSearch className="w-4 h-4 text-gold-400" />
               Track Order
-            </button>
+            </motion.button>
             <motion.button
               onClick={() => openBooking()}
-              whileHover={{ scale: 1.04 }}
+              whileHover={{ scale: 1.04, y: -1, boxShadow: "0 10px 25px -5px rgba(244, 210, 122, 0.35)" }}
               whileTap={{ scale: 0.96 }}
               className="btn-gold text-sm px-5 py-2.5"
             >
@@ -111,29 +117,35 @@ export default function Navbar() {
             </motion.button>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2.5 rounded-xl bg-white/5 border border-emerald-300/15 text-emerald-50"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          </motion.button>
         </div>
       </div>
 
       <AnimatePresence>
         {open && (
           <motion.nav
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -14, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="lg:hidden mx-3 sm:mx-6 rounded-2xl bg-emerald-950/95 backdrop-blur-xl border border-gold-400/20 p-3 shadow-2xl"
             aria-label="Mobile"
           >
-            {LINKS.map((l) => (
-              <a
+            {LINKS.map((l, i) => (
+              <motion.a
                 key={l.href}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.035, duration: 0.2 }}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className={cn(
@@ -142,10 +154,16 @@ export default function Navbar() {
                 )}
               >
                 {l.label}
-              </a>
+              </motion.a>
             ))}
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <button
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: LINKS.length * 0.035, duration: 0.25 }}
+              className="grid grid-cols-2 gap-2 mt-2"
+            >
+              <motion.button
+                whileTap={{ scale: 0.96 }}
                 onClick={() => {
                   setOpen(false);
                   setTrackOpen(true);
@@ -153,8 +171,9 @@ export default function Navbar() {
                 className="py-3 rounded-xl text-sm font-semibold text-emerald-50 border border-emerald-300/20"
               >
                 Track Order
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.96 }}
                 onClick={() => {
                   setOpen(false);
                   openBooking();
@@ -162,8 +181,8 @@ export default function Navbar() {
                 className="btn-gold text-sm py-3"
               >
                 Book Now
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </motion.nav>
         )}
       </AnimatePresence>

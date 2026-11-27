@@ -33,17 +33,28 @@ export function About() {
           </p>
           <div className="mt-8 flex flex-wrap gap-2.5">
             {["Premium Quality", "Trust & Authenticity", "Clean Packaging", "Direct Delivery"].map((t) => (
-              <span key={t} className="px-4 py-2 rounded-full bg-emerald-900/5 border border-emerald-900/10 text-sm font-semibold text-emerald-900">
+              <motion.span
+                key={t}
+                whileHover={{ scale: 1.05, y: -2 }}
+                transition={{ duration: 0.2 }}
+                className="px-4 py-2 rounded-full bg-emerald-900/5 border border-emerald-900/10 text-sm font-semibold text-emerald-900 cursor-default"
+              >
                 {t}
-              </span>
+              </motion.span>
             ))}
           </div>
         </Reveal>
 
         <Reveal delay={0.15}>
-          <div className="relative rounded-[2rem] bg-emerald-950 text-white p-8 sm:p-10 shadow-2xl overflow-hidden">
+          <motion.div
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative rounded-[2rem] bg-emerald-950 text-white p-8 sm:p-10 shadow-2xl overflow-hidden"
+          >
             <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gold-400/15 blur-2xl" />
-            <Crown className="w-10 h-10 text-gold-400" />
+            <motion.div whileHover={{ rotate: 10, scale: 1.1 }} className="inline-block cursor-default">
+              <Crown className="w-10 h-10 text-gold-400" />
+            </motion.div>
             <h3 className="mt-5 font-display text-2xl font-bold">Straight from the label</h3>
             <p className="text-emerald-100/60 text-sm mt-1">Everything we promise is printed on every pouch.</p>
             <dl className="mt-7 space-y-4">
@@ -54,13 +65,18 @@ export function About() {
                 ["Best Before", "6 months from packaging"],
                 ["Packed & Marketed by", "D GOLD SUPARI, Sirsi, Uttara Kannada – 581402"],
               ].map(([k, v]) => (
-                <div key={k} className="flex gap-4 border-b border-white/8 pb-3.5 last:border-0">
+                <motion.div
+                  key={k}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex gap-4 border-b border-white/8 pb-3.5 last:border-0 cursor-default"
+                >
                   <dt className="w-32 flex-shrink-0 text-[11px] uppercase tracking-[0.16em] text-gold-300/90 font-bold pt-0.5">{k}</dt>
                   <dd className="text-sm text-emerald-50/90 leading-relaxed">{v}</dd>
-                </div>
+                </motion.div>
               ))}
             </dl>
-          </div>
+          </motion.div>
         </Reveal>
       </div>
     </section>
@@ -96,10 +112,11 @@ export function Why() {
           {WHY.map((w, i) => (
             <Reveal key={w.title} delay={i * 0.07}>
               <motion.div
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -8, scale: 1.01 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                 className="group h-full rounded-3xl glass border-emerald-300/10 hover:border-gold-400/40 p-7 transition-colors duration-300"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400/25 to-gold-600/15 border border-gold-400/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400/25 to-gold-600/15 border border-gold-400/30 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-transform">
                   <w.icon className="w-[22px] h-[22px] text-gold-400" />
                 </div>
                 <h3 className="mt-5 font-display text-xl font-bold text-white">{w.title}</h3>
@@ -137,21 +154,30 @@ export function HowItWorks() {
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.1}>
-              <div className="relative h-full rounded-3xl bg-white border border-emerald-900/8 p-7 shadow-[0_18px_45px_-20px_rgba(6,48,31,0.25)] hover:shadow-[0_24px_55px_-20px_rgba(6,48,31,0.35)] hover:-translate-y-1.5 transition-all duration-300">
-                <div className="absolute top-6 right-6 font-display text-5xl font-bold text-emerald-900/8">{i + 1}</div>
-                <div className="w-12 h-12 rounded-2xl bg-gradient-gold flex items-center justify-center shadow-gold">
+              <motion.div
+                whileHover={{ y: -8, scale: 1.015 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative h-full rounded-3xl bg-white border border-emerald-900/8 p-7 shadow-[0_18px_45px_-20px_rgba(6,48,31,0.25)] hover:shadow-[0_24px_55px_-20px_rgba(6,48,31,0.35)] transition-all duration-300"
+              >
+                <div className="absolute top-6 right-6 font-display text-5xl font-bold text-emerald-900/8 group-hover:scale-110 transition-transform">{i + 1}</div>
+                <div className="w-12 h-12 rounded-2xl bg-gradient-gold flex items-center justify-center shadow-gold group-hover:rotate-6 group-hover:scale-110 transition-transform">
                   <s.icon className="w-[22px] h-[22px] text-emerald-950" />
                 </div>
                 <h3 className="mt-5 font-display text-xl font-bold">{s.title}</h3>
                 <p className="mt-2.5 text-sm text-emerald-900/65 leading-relaxed">{s.text}</p>
-              </div>
+              </motion.div>
             </Reveal>
           ))}
         </div>
         <Reveal delay={0.2} className="mt-12 text-center">
-          <button onClick={() => openBooking()} className="btn-gold px-8 py-4 text-base">
+          <motion.button
+            whileHover={{ scale: 1.03, y: -2, boxShadow: "0 14px 30px -6px rgba(244, 210, 122, 0.45)" }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => openBooking()}
+            className="btn-gold px-8 py-4 text-base"
+          >
             Start Your Booking
-          </button>
+          </motion.button>
         </Reveal>
       </div>
     </section>
@@ -229,20 +255,25 @@ export function Delivery() {
                 "Order updates: track online with your Order ID, or ping us on WhatsApp",
                 "We deliver across all 31 districts of Karnataka — locations outside Karnataka are currently not serviceable",
               ].map((t) => (
-                <div key={t} className="flex items-start gap-3 text-sm text-emerald-100/80">
+                <motion.div
+                  key={t}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-start gap-3 text-sm text-emerald-100/80 cursor-default"
+                >
                   <CheckCircle2 className="w-[18px] h-[18px] text-gold-400 flex-shrink-0 mt-0.5" />
                   {t}
-                </div>
+                </motion.div>
               ))}
             </div>
-            <a
-              href={waLink(settings.whatsapp, "Hello D GOLD! Is my location in Karnataka serviceable for delivery? My PIN code is ")}
+            <motion.a
+              href={waLink(settings.whatsapp, "Hello D GOLD! Is my area in Bengaluru serviceable for delivery? My PIN code is ")}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#25D366] hover:text-emerald-300 transition-colors"
             >
               <MessageCircle className="w-4 h-4" /> Ask about your area on WhatsApp
-            </a>
+            </motion.a>
           </Reveal>
 
           <Reveal delay={0.15}>
@@ -269,7 +300,14 @@ export function Delivery() {
                   aria-label="PIN code"
                   className="field flex-1 text-lg tracking-[0.2em] font-semibold"
                 />
-                <button onClick={check} className="btn-gold px-6">Check</button>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={check}
+                  className="btn-gold px-6"
+                >
+                  Check
+                </motion.button>
               </div>
 
               {result === "ok" && (
@@ -299,14 +337,14 @@ export function Delivery() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-gold-300/80 font-bold mb-3">
                   Delivering daily across all 31 districts
                 </p>
-                <div className="flex flex-wrap gap-2 max-h-52 overflow-y-auto pr-1">
-                  {KARNATAKA_DISTRICTS.map((a) => (
-                    <span key={a} className="px-3 py-1.5 rounded-full bg-white/5 border border-emerald-300/15 text-xs font-medium text-emerald-100/75">
+                <div className="flex flex-wrap gap-2">
+                  {AREAS.map((a) => (
+                    <motion.span key={a} className="px-3 py-1.5 rounded-full bg-white/5 border border-emerald-300/15 text-xs font-medium text-emerald-100/75" >
                       {a}
-                    </span>
+                    </motion.span>
                   ))}
                   <span className="px-3 py-1.5 rounded-full bg-gold-400/10 border border-gold-400/30 text-xs font-semibold text-gold-300">
-                    + all 31 Karnataka Districts
+                    + all Bengaluru Urban
                   </span>
                 </div>
               </div>

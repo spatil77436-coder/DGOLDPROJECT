@@ -73,9 +73,15 @@ export default function TrackOrder() {
                 </div>
                 <h2 className="font-display text-xl font-bold text-white">Track Your Order</h2>
               </div>
-              <button onClick={() => setTrackOpen(false)} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-100/70 hover:text-white" aria-label="Close">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setTrackOpen(false)}
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-100/70 hover:text-white"
+                aria-label="Close"
+              >
                 <X className="w-5 h-5" />
-              </button>
+              </motion.button>
             </div>
 
             <div className="px-6 py-6">
@@ -89,14 +95,20 @@ export default function TrackOrder() {
                   <input className="field" inputMode="numeric" maxLength={10} value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))} placeholder="Number used at booking" />
                 </div>
                 {error && <p className="err">{error}</p>}
-                <button onClick={lookup} disabled={loading} className="btn-gold w-full py-3.5 disabled:opacity-60">
+                <motion.button
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={lookup}
+                  disabled={loading}
+                  className="btn-gold w-full py-3.5 disabled:opacity-60 cursor-pointer"
+                >
                   {loading ? <Spinner /> : <><Search className="w-4 h-4" /> Track Order</>}
-                </button>
+                </motion.button>
               </div>
 
               <AnimatePresence>
                 {order && (
-                  <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mt-6 rounded-2xl bg-emerald-950/60 border border-gold-400/25 p-5">
+                  <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }} className="mt-6 rounded-2xl bg-emerald-950/60 border border-gold-400/25 p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="font-mono text-sm font-bold text-gold-300">{order.id}</p>
@@ -123,7 +135,13 @@ export default function TrackOrder() {
                           const current = i === reachedIndex;
                           const at = order.history.find((h) => h.status === s)?.at;
                           return (
-                            <li key={s} className="flex gap-3">
+                            <motion.li
+                              key={s}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.06, duration: 0.25 }}
+                              className="flex gap-3"
+                            >
                               <div className="flex flex-col items-center">
                                 <span className={cn("w-3.5 h-3.5 rounded-full border-2 flex-shrink-0 mt-0.5",
                                   done ? "bg-gold-400 border-gold-400" : "border-white/25",
@@ -134,7 +152,7 @@ export default function TrackOrder() {
                                 <p className={cn("text-sm font-semibold leading-tight", done ? "text-white" : "text-emerald-100/40")}>{STATUS_LABEL[s]}</p>
                                 {at && <p className="text-[11px] text-emerald-100/45 mt-0.5">{fmtDateTime(at)}</p>}
                               </div>
-                            </li>
+                            </motion.li>
                           );
                         })}
                       </ol>
