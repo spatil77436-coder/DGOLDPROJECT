@@ -112,7 +112,7 @@ export const DEFAULT_SETTINGS: Settings = {
   slots: ["10 AM - 1 PM", "1 PM - 4 PM", "4 PM - 8 PM"],
   lowStockThreshold: 10,
   deliveryNote:
-    "Direct doorstep delivery to your pan shop, anywhere within Bengaluru. Outside Bengaluru we cannot deliver yet.",
+    "Direct doorstep delivery to your pan shop, anywhere across Karnataka. Outside Karnataka we cannot deliver yet.",
   extraPins: [],
   blockedPins: [],
 };

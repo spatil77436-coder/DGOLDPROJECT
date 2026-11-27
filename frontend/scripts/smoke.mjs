@@ -87,16 +87,16 @@ async function main() {
 
   console.log("\n[2] PIN checker (delivery section)");
   const pinInput = document.querySelector('#delivery input[aria-label="PIN code"]');
-  setInput(pinInput, "562109", "delivery pin");
+  setInput(pinInput, "110001", "delivery pin");
   click(byText("#delivery button", "Check"), "pin check button");
   await sleep(300);
-  ok(document.body.textContent.includes("Sorry! D GOLD currently delivers only within Bengaluru."), "out-of-area message exact");
+  ok(document.body.textContent.includes("Sorry! D GOLD currently delivers only within Karnataka."), "out-of-area message exact");
   setInput(pinInput, "560041", "delivery pin ok");
   click(byText("#delivery button", "Check"), "pin check button 2");
   await sleep(300);
   ok(document.body.textContent.includes("we deliver to 560041"), "serviceable PIN accepted");
 
-  console.log("\n[3] Booking wizard — Bengaluru validation blocks orders");
+  console.log("\n[3] Booking wizard — Karnataka validation blocks orders");
   click(byText("header button", "Book Now"), "navbar Book Now");
   await sleep(500);
   const dialog = document.querySelector('[role="dialog"][aria-label="Book your order"]');
@@ -108,15 +108,15 @@ async function main() {
   const dlg = () => document.querySelector('[aria-label="Book your order"]');
   setInput(dlg().querySelector('input[placeholder="e.g. Ramesh Naik"]'), "Test Kumar", "name");
   setInput(dlg().querySelector('input[placeholder="10-digit number"]'), "9880012345", "phone");
-  setInput(dlg().querySelector('input[placeholder="e.g. Jayanagar 4th Block"]'), "Jayanagar", "area");
-  setInput(dlg().querySelector('input[placeholder="5600xx"]'), "562109", "bad pin");
-  setInput(dlg().querySelector("textarea"), "Shop 12, 4th Block, Jayanagar, Bengaluru", "address");
+  setInput(dlg().querySelector('input[placeholder="e.g. Jayanagar, Bengaluru or Sirsi"]'), "Jayanagar", "area");
+  setInput(dlg().querySelector('input[placeholder="e.g. 560041"]'), "110001", "bad pin");
+  setInput(dlg().querySelector("textarea"), "Shop 12, 4th Block, Jayanagar, Karnataka", "address");
   click(byText('[aria-label="Book your order"] button', "Continue"), "continue with bad pin");
   await sleep(400);
-  ok(dlg().textContent.includes("Sorry! D GOLD currently delivers only within Bengaluru."), "invalid PIN blocks step 2");
+  ok(dlg().textContent.includes("Sorry! D GOLD currently delivers only within Karnataka."), "invalid PIN blocks step 2");
   ok(dlg().textContent.includes("2. Delivery Details"), "still on delivery step");
 
-  setInput(dlg().querySelector('input[placeholder="5600xx"]'), "560041", "good pin");
+  setInput(dlg().querySelector('input[placeholder="e.g. 560041"]'), "560041", "good pin");
   click(byText('[aria-label="Book your order"] button', "Continue"), "continue with good pin");
   await sleep(400);
   ok(dlg().textContent.includes("Review") && dlg().textContent.includes("Test Kumar"), "review step shows summary");

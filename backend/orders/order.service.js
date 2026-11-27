@@ -7,8 +7,9 @@ export async function create(input){
  if(!Number.isInteger(item.qty)||item.qty<1||item.qty>999)throw new ApiError(422,"Quantity must be between 1 and 999");
  const settings=await prisma.businessSettings.findUnique({where:{id:"main"}});
  if(settings?.blockedPins.includes(String(customer.pin)))throw new ApiError(422,"Delivery is not available for this PIN code");
- if(settings && settings.extraPins.length===0 && !String(customer.pin).startsWith("560"))throw new ApiError(422,"Delivery is currently available only in supported Bengaluru PIN codes");
- if(settings && settings.extraPins.length>0 && !String(customer.pin).startsWith("560") && !settings.extraPins.includes(String(customer.pin)))throw new ApiError(422,"Delivery is not available for this PIN code");
+ const isKarnataka = /^(56|57|58|59)\d{4}$/.test(String(customer.pin));
+ if(settings && settings.extraPins.length===0 && !isKarnataka)throw new ApiError(422,"Delivery is currently available only in supported Karnataka PIN codes");
+ if(settings && settings.extraPins.length>0 && !isKarnataka && !settings.extraPins.includes(String(customer.pin)))throw new ApiError(422,"Delivery is not available for this PIN code");
  const token=makeTrackingToken();
  const result=await prisma.$transaction(async tx=>{
   const product=await tx.product.findUnique({where:{id:item.productId},include:{packs:true}}); const pack=product?.packs.find(p=>p.id===item.packId);

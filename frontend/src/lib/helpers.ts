@@ -1,20 +1,22 @@
 import type { Order, Settings } from "./db";
 
 export const OUT_OF_AREA_MESSAGE =
-  "Sorry! D GOLD currently delivers only within Bengaluru.";
+  "Sorry! D GOLD currently delivers only within Karnataka.";
 
 export function isValidPhone(phone: string): boolean {
   return /^[6-9]\d{9}$/.test(phone.trim());
 }
 
-export function isBengaluruPin(pin: string, settings?: Pick<Settings, "extraPins" | "blockedPins">): boolean {
+export function isKarnatakaPin(pin: string, settings?: Pick<Settings, "extraPins" | "blockedPins">): boolean {
   const p = pin.trim();
   if (!/^\d{6}$/.test(p)) return false;
   if (settings?.blockedPins?.includes(p)) return false;
   if (settings?.extraPins?.includes(p)) return true;
-  // Bengaluru Urban PIN series is 560xxx. Rural/other districts (561xxx/562xxx…) are excluded.
-  return /^560\d{3}$/.test(p);
+  // Karnataka Postal Circle covers PIN codes starting with 56, 57, 58, 59 (560001 - 591999)
+  return /^(56|57|58|59)\d{4}$/.test(p);
 }
+
+export const isBengaluruPin = isKarnatakaPin;
 
 export function inr(n: number): string {
   return new Intl.NumberFormat("en-IN", {
@@ -60,7 +62,7 @@ export function orderWaText(order: Order): string {
     `Order ID: ${order.id}`,
     `Product: ${order.item.productName} — ${order.item.packLabel} × ${order.item.qty}`,
     order.total != null ? `Total: ${inr(order.total)}` : `Total: to be confirmed on call`,
-    `Deliver to: ${order.customer.area}, Bengaluru – ${order.customer.pin}`,
+    `Deliver to: ${order.customer.area}, Karnataka – ${order.customer.pin}`,
     `Preferred: ${fmtDate(order.deliveryDate)}, ${order.slot}`,
     `Please confirm my order. Thank you!`,
   ];

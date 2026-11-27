@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { Reveal, SectionTag } from "./ui";
 import { useStore } from "../context/StoreContext";
-import { isBengaluruPin, OUT_OF_AREA_MESSAGE, waLink } from "../lib/helpers";
+import { isKarnatakaPin, isBengaluruPin, OUT_OF_AREA_MESSAGE, waLink } from "../lib/helpers";
 
 /* ------------------------------ ABOUT ------------------------------ */
 
@@ -160,11 +160,41 @@ export function HowItWorks() {
 
 /* ----------------------------- DELIVERY ----------------------------- */
 
-const AREAS = [
-  "Jayanagar", "Malleshwaram", "Koramangala", "Rajajinagar", "KR Market", "Shivajinagar",
-  "Indiranagar", "Yelahanka", "Whitefield", "Basavanagudi", "HSR Layout", "Vijayanagar",
-  "Hebbal", "BTM Layout", "Marathahalli", "Banashankari", "Electronic City", "RT Nagar",
+export const KARNATAKA_DISTRICTS = [
+  "Bagalkote",
+  "Ballari",
+  "Belagavi",
+  "Bengaluru Rural",
+  "Bengaluru Urban",
+  "Bidar",
+  "Chamarajanagar",
+  "Chikkaballapura",
+  "Chikkamagaluru",
+  "Chitradurga",
+  "Dakshina Kannada (Mangaluru)",
+  "Davanagere",
+  "Dharwad (Hubballi)",
+  "Gadag",
+  "Hassan",
+  "Haveri",
+  "Kalaburagi",
+  "Kodagu",
+  "Kolar",
+  "Koppal",
+  "Mandya",
+  "Mysuru",
+  "Raichur",
+  "Ramanagara",
+  "Shivamogga",
+  "Tumakuru",
+  "Udupi",
+  "Uttara Kannada (Sirsi)",
+  "Vijayapura",
+  "Yadgir",
+  "Vijayanagara",
 ];
+
+const AREAS = KARNATAKA_DISTRICTS;
 
 export function Delivery() {
   const { settings, openBooking } = useStore();
@@ -176,7 +206,7 @@ export function Delivery() {
       setResult("invalid");
       return;
     }
-    setResult(isBengaluruPin(pin, settings) ? "ok" : "bad");
+    setResult(isKarnatakaPin(pin, settings) ? "ok" : "bad");
   };
 
   return (
@@ -188,8 +218,8 @@ export function Delivery() {
           <Reveal>
             <SectionTag>Delivery Information</SectionTag>
             <h2 className="mt-5 font-display text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
-              One city, done right.<br />
-              <span className="text-gradient-gold">Bengaluru Only.</span>
+              Proudly Serving All over Karnataka.<br />
+              {/* <span className="text-gradient-gold">All Karnataka.</span> */}
             </h2>
             <p className="mt-6 text-lg text-emerald-100/70 leading-relaxed">{settings.deliveryNote}</p>
             <div className="mt-7 space-y-3.5">
@@ -197,7 +227,7 @@ export function Delivery() {
                 "Delivery slots: " + settings.slots.join(" · "),
                 "Choose your preferred delivery date at booking",
                 "Order updates: track online with your Order ID, or ping us on WhatsApp",
-                "We currently do not deliver outside Bengaluru — other cities, districts and states are not serviceable",
+                "We deliver across all 31 districts of Karnataka — locations outside Karnataka are currently not serviceable",
               ].map((t) => (
                 <div key={t} className="flex items-start gap-3 text-sm text-emerald-100/80">
                   <CheckCircle2 className="w-[18px] h-[18px] text-gold-400 flex-shrink-0 mt-0.5" />
@@ -206,7 +236,7 @@ export function Delivery() {
               ))}
             </div>
             <a
-              href={waLink(settings.whatsapp, "Hello D GOLD! Is my area in Bengaluru serviceable for delivery? My PIN code is ")}
+              href={waLink(settings.whatsapp, "Hello D GOLD! Is my location in Karnataka serviceable for delivery? My PIN code is ")}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#25D366] hover:text-emerald-300 transition-colors"
@@ -223,7 +253,7 @@ export function Delivery() {
                 </div>
                 <div>
                   <h3 className="font-display text-2xl font-bold text-white">Check Your PIN Code</h3>
-                  <p className="text-xs text-emerald-100/60">Bengaluru Urban pincodes (560xxx) are serviceable</p>
+                  <p className="text-xs text-emerald-100/60">All Karnataka pincodes (56xxxx – 59xxxx) are serviceable</p>
                 </div>
               </div>
               <div className="mt-6 flex gap-2.5">
@@ -235,7 +265,7 @@ export function Delivery() {
                   }}
                   onKeyDown={(e) => e.key === "Enter" && check()}
                   inputMode="numeric"
-                  placeholder="e.g. 560041"
+                  placeholder="e.g. 560001 / 581402"
                   aria-label="PIN code"
                   className="field flex-1 text-lg tracking-[0.2em] font-semibold"
                 />
@@ -267,16 +297,16 @@ export function Delivery() {
 
               <div className="mt-7 pt-6 border-t border-white/10">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-gold-300/80 font-bold mb-3">
-                  Delivering daily across
+                  Delivering daily across all 31 districts
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {AREAS.map((a) => (
+                <div className="flex flex-wrap gap-2 max-h-52 overflow-y-auto pr-1">
+                  {KARNATAKA_DISTRICTS.map((a) => (
                     <span key={a} className="px-3 py-1.5 rounded-full bg-white/5 border border-emerald-300/15 text-xs font-medium text-emerald-100/75">
                       {a}
                     </span>
                   ))}
                   <span className="px-3 py-1.5 rounded-full bg-gold-400/10 border border-gold-400/30 text-xs font-semibold text-gold-300">
-                    + all Bengaluru Urban
+                    + all 31 Karnataka Districts
                   </span>
                 </div>
               </div>

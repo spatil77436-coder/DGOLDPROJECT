@@ -115,7 +115,7 @@ export default function SettingsAdmin({ settings, reload }: { settings: Settings
         <h3 className="font-display text-lg font-bold text-white flex items-center gap-2 mb-2">
           <Clock className="w-4 h-4 text-gold-400" /> Delivery Settings
         </h3>
-        <p className="text-xs text-emerald-100/50 mb-5">Service area is fixed to <strong className="text-gold-300">Bengaluru Only</strong> (560xxx). Use the lists below for exceptions.</p>
+        <p className="text-xs text-emerald-100/50 mb-5">Service area covers all <strong className="text-gold-300">Karnataka</strong> (56xxxx – 59xxxx). Use the lists below for exceptions.</p>
         <div>
           <label className="lbl">Delivery Note (shown on website)</label>
           <textarea className="field resize-none" rows={2} value={form.deliveryNote} onChange={(e) => set("deliveryNote", e.target.value)} />

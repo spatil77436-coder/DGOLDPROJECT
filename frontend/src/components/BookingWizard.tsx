@@ -79,7 +79,7 @@ export default function BookingWizard() {
   const errors = {
     name: form.name.trim().length < 3 ? "Please enter your full name." : "",
     phone: !isValidPhone(form.phone) ? "Enter a valid 10-digit mobile number." : "",
-    area: form.area.trim().length < 3 ? "Enter your area / locality in Bengaluru." : "",
+    area: form.area.trim().length < 3 ? "Enter your area / locality / district in Karnataka." : "",
     address: form.address.trim().length < 10 ? "Enter your complete shop delivery address." : "",
     pin: !/^\d{6}$/.test(form.pin)
       ? "Enter a valid 6-digit PIN code."
@@ -359,8 +359,8 @@ export default function BookingWizard() {
                         </div>
                         <div className="grid sm:grid-cols-[1fr_150px] gap-4">
                           <div>
-                            <label className="lbl">Area / Locality (Bengaluru) *</label>
-                            <input className="field" value={form.area} onChange={(e) => set("area", e.target.value)} placeholder="e.g. Jayanagar 4th Block" />
+                            <label className="lbl">Area / Locality / District (Karnataka) *</label>
+                            <input className="field" value={form.area} onChange={(e) => set("area", e.target.value)} placeholder="e.g. Jayanagar, Bengaluru or Sirsi" />
                             {attempted && errors.area && <p className="err">{errors.area}</p>}
                           </div>
                           <div>
@@ -372,7 +372,7 @@ export default function BookingWizard() {
                               maxLength={6}
                               onChange={(e) => { set("pin", e.target.value.replace(/\D/g, "").slice(0, 6)); setPinTouched(true); }}
                               onBlur={() => setPinTouched(true)}
-                              placeholder="5600xx"
+                              placeholder="e.g. 560041"
                             />
                           </div>
                         </div>
@@ -390,7 +390,7 @@ export default function BookingWizard() {
                         {attempted && errors.pin && form.pin.length !== 6 && <p className="err">{errors.pin}</p>}
                         <div>
                           <label className="lbl">Shop Delivery Address *</label>
-                          <textarea className="field resize-none" rows={2} value={form.address} onChange={(e) => set("address", e.target.value)} placeholder="Shop name, building, street, landmark — Bengaluru" />
+                          <textarea className="field resize-none" rows={2} value={form.address} onChange={(e) => set("address", e.target.value)} placeholder="Shop name, building, street, landmark — Karnataka" />
                           {attempted && errors.address && <p className="err">{errors.address}</p>}
                         </div>
                         <div className="grid sm:grid-cols-2 gap-4">
