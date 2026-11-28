@@ -6,7 +6,7 @@ const cleanUrl = (url) => (url ? url.trim().replace(/\/$/, "") : "");
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://dgoldproject-sigma.vercel.app/"  // ✅ quoted, no trailing slash
+  "https://dgoldproject-sigma.vercel.app/", "www.dgoldsupari.com"  // ✅ quoted, no trailing slash
 ].filter(Boolean);
 
 export const corsMiddleware = cors({
