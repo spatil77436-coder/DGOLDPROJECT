@@ -1,4 +1,3 @@
-
 import cors from "cors";
 import { env } from "./env.js";
 
@@ -6,24 +5,29 @@ const cleanUrl = (url) => (url ? url.trim().replace(/\/$/, "") : "");
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://dgoldproject-sigma.vercel.app/", " https://www.dgoldsupari.com"  // ✅ quoted, no trailing slash
-].filter(Boolean);
+  "https://dgoldproject-sigma.vercel.app",
+  "https://dgoldsupari.com",
+  "https://www.dgoldsupari.com",
+  env.FRONTEND_URL,
+]
+  .map(cleanUrl)
+  .filter(Boolean);
 
 export const corsMiddleware = cors({
   origin(origin, callback) {
-    // Allow requests without an Origin header (e.g. server-to-server or curl)
+    // Allow requests without Origin
     if (!origin) {
       return callback(null, true);
     }
 
     const cleanOrigin = cleanUrl(origin);
 
-    // Allow the configured frontend
+    // Allow explicitly configured origins
     if (allowedOrigins.includes(cleanOrigin)) {
       return callback(null, true);
     }
 
-    // Allow all Vercel deployments for this project (production and preview)
+    // Allow Vercel preview deployments
     const vercelOriginPattern =
       /^https:\/\/dgoldproject.*\.vercel\.app$/;
 
@@ -31,7 +35,9 @@ export const corsMiddleware = cors({
       return callback(null, true);
     }
 
-    return callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    return callback(
+      new Error(`Origin ${origin} is not allowed by CORS`)
+    );
   },
 
   credentials: true,
